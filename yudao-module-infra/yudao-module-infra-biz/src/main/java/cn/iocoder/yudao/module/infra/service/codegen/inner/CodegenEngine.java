@@ -155,6 +155,10 @@ public class CodegenEngine {
         // className 相关
         // 去掉指定前缀，将 TestDictType 转换成 DictType. 因为在 create 等方法后，不需要带上 Test 前缀
         String simpleClassName = removePrefix(table.getClassName(), upperFirst(table.getModuleName()));
+        // 可能存在 module 和 className 相同情况， 如 blog_blog
+        if (StrUtil.equals(table.getClassName(), upperFirst(table.getModuleName()))){
+            simpleClassName = table.getClassName();
+        }
         bindingMap.put("simpleClassName", simpleClassName);
         bindingMap.put("simpleClassName_underlineCase", toUnderlineCase(simpleClassName)); // 将 DictType 转换成 dict_type
         bindingMap.put("classNameVar", lowerFirst(simpleClassName)); // 将 DictType 转换成 dictType，用于变量

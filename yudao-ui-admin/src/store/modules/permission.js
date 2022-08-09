@@ -35,6 +35,10 @@ const permission = {
           const rdata = JSON.parse(JSON.stringify(res.data))
           const sidebarRoutes = filterAsyncRouter(sdata)
           const rewriteRoutes = filterAsyncRouter(rdata, false, true)
+
+          console.log("sidebarRoutes:",sidebarRoutes);
+          console.log("rewriteRoutes:",rewriteRoutes);
+
           rewriteRoutes.push({ path: '*', redirect: '/404', hidden: true })
           commit('SET_ROUTES', rewriteRoutes)
           commit('SET_SIDEBAR_ROUTERS', constantRoutes.concat(sidebarRoutes))
@@ -50,6 +54,7 @@ const permission = {
 // 遍历后台传来的路由字符串，转换为组件对象
 function filterAsyncRouter(asyncRouterMap, lastRouter = false, type = false) {
   return asyncRouterMap.filter(route => {
+    // route.alwaysShow = true
     // 将 ruoyi 后端原有耦合前端的逻辑，迁移到此处
     // 处理 meta 属性
     route.meta = {

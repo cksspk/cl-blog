@@ -166,7 +166,24 @@ export const constantRoutes = [
         meta: {title: '流程详情', activeMenu: '/bpm/task/my'}
       }
     ]
-  }
+  }, {
+    path: '/blogManage',
+    component: Layout,
+    hidden: true,
+    redirect: 'noredirect',
+    children: [{
+        path: 'blog/create',
+        component: (resolve) => require(['@/views/blog/blog/add'], resolve),
+        name: '新增博客',
+        meta: {title: '新增博客', icon: 'form', activeMenu: '/blog/blog'}
+      }, {
+        path: 'blog/edit:id(\\d+)',
+        component: (resolve) => require(['@/views/blog/blog/edit'], resolve),
+        name: '编辑博客',
+        meta: {title: '编辑博客', icon: 'view', activeMenu: '/blog/blog'}
+      }
+    ]
+  },
 ]
 
 // 防止连续点击多次路由报错

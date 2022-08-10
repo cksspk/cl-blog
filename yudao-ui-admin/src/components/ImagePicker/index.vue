@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-tabs tab-position="left">
-      <el-tab-pane label="七牛云服务器" style="height: 400px;overflow-y: auto">
+      <!-- <el-tab-pane label="七牛云服务器" style="height: 400px;overflow-y: auto">
         <QiNiuImageContent @onImgSelect="onImgSelect"/>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="本地服务器">
         <LocalImageContent @onImgSelect="onImgSelect"/>
       </el-tab-pane>
@@ -16,7 +16,7 @@
           <i class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-tab-pane>
-      <el-tab-pane label="网络图片">网络地址</el-tab-pane>
+      <!-- <el-tab-pane label="网络图片">网络地址</el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

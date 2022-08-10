@@ -33,10 +33,11 @@
         imageList: [],
         // 查询参数
         queryParams: {
-          pageNum: 0,
-          pageSize: 2000,
-          orderByColumn: "createTime",
-          isAsc: "desc"
+          pageNo: 1,
+          pageSize: 10,
+          path: null,
+          type: null,
+          createTime: []
         },
         loading: false,
         noMore: false,

@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.infra.service.file;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -13,6 +14,8 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+
+import java.io.File;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.infra.enums.ErrorCodeConstants.FILE_NOT_EXISTS;
@@ -38,11 +41,14 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @SneakyThrows
-    public String createFile(String name, String path, byte[] content) {
+    public String createFile(String name, String path, byte[] content, String folder) {
         // 计算默认的 path 名
         String type = FileTypeUtils.getMineType(content, name);
         if (StrUtil.isEmpty(path)) {
             path = FileUtils.generatePath(content, name);
+        }
+        if (StrUtil.isEmpty(folder)) {
+            path = folder + File.separator + path;
         }
         // 如果 name 为空，则使用 path 填充
         if (StrUtil.isEmpty(name)) {

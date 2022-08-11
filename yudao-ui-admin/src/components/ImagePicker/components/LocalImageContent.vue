@@ -5,7 +5,8 @@
       <el-col :span="8" v-for="item in imageList">
         <div @click="onImgSelect(item)">
           <el-card shadow="hover" :class="{'selectImg':item.id==index}">
-            <img :src=" baseApi + '/file/' + item.type + '/' + item.realName" class="image">
+            <!-- <img :src=" baseApi + '/file/' + item.type + '/' + item.realName" class="image"> -->
+            <img :src="item.url" class="image">
             <div style="padding: 14px;">
               <span class="name" :title="item.name">{{item.name}}</span>
               <div class="bottom clearfix">
@@ -48,14 +49,17 @@
     },
     methods: {
       load() {
+        debugger
+        console.log("load()");
         setTimeout(() => {
-          this.queryParams.pageNum++;
+          this.queryParams.pageNo++;
           this.getLocalImageContent();
         }, 1000)
       },
       onImgSelect(item) {
         this.index = item.id;
-        this.$emit('onImgSelect', this.baseApi + '/file/' + item.type + '/' + item.realName);
+        // this.$emit('onImgSelect', this.baseApi + '/file/' + item.type + '/' + item.realName);
+        this.$emit('onImgSelect', item.url);
       },
       getLocalImageContent() {
         if (this.noMore) {
@@ -66,7 +70,7 @@
           if (this.imageList.length == response.total) {
             this.noMore = true;
           }
-          this.imageList.push(...response.rows);
+          this.imageList.push(...response.data.list);
           this.loading = false;
         });
       }

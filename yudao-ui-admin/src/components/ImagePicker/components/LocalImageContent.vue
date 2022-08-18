@@ -2,7 +2,7 @@
   <div>
     本地服务器共有{{imageList.length}}张图
     <el-row :gutter="12">
-      <el-col :span="8" v-for="item in imageList">
+      <el-col :span="8" v-for="(item, id) in imageList" :key = "id">
         <div @click="onImgSelect(item)">
           <el-card shadow="hover" :class="{'selectImg':item.id==index}">
             <!-- <img :src=" baseApi + '/file/' + item.type + '/' + item.realName" class="image"> -->
@@ -70,6 +70,7 @@
           if (this.imageList.length == response.total) {
             this.noMore = true;
           }
+          console.log("imageList", this.imageList);
           this.imageList.push(...response.data.list);
           this.loading = false;
         });

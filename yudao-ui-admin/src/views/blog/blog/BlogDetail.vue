@@ -249,12 +249,7 @@ export default {
     //获取文章分类
     getCategory() {
       listSimpleCategorys().then(response => {
-          // if (response.code == 200) {
-            // this.categoryOptions = response.rows;
             this.categoryOptions.push(...response.data);
-          // } else {
-          //   this.msgError(response.msg);
-          // }
         }
       );
     },

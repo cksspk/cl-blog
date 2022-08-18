@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.blog.controller.admin.blog;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -30,6 +31,7 @@ import cn.iocoder.yudao.module.blog.service.blog.BlogService;
 @RestController
 @RequestMapping("/blog/blog")
 @Validated
+@Slf4j
 public class BlogController {
 
     @Resource
@@ -41,6 +43,16 @@ public class BlogController {
     public CommonResult<Long> createBlog(@Valid @RequestBody BlogCreateReqVO createReqVO) {
         return success(blogService.createBlog(createReqVO));
     }
+
+    @PreAuthorize("@permissionService.hasPermission('blog:blog:add')")
+    @ApiOperation(value = "创建博客草稿")
+    @PostMapping("draft")
+    public CommonResult draft(@Valid @RequestBody BlogCreateReqVO createReqVO) {
+        // TODO 设置草稿状态
+        createReqVO.setStatus(-1);
+        return success(blogService.createBlog(createReqVO));
+    }
+
 
     @PutMapping("/update")
     @ApiOperation("更新博客")
@@ -73,6 +85,7 @@ public class BlogController {
     @ApiImplicitParam(name = "ids", value = "编号列表", required = true, example = "1024,2048", dataTypeClass = List.class)
     @PreAuthorize("@ss.hasPermission('blog:blog:query')")
     public CommonResult<List<BlogRespVO>> getBlogList(@RequestParam("ids") Collection<Long> ids) {
+
         List<BlogDO> list = blogService.getBlogList(ids);
         return success(BlogConvert.INSTANCE.convertList(list));
     }
@@ -81,6 +94,7 @@ public class BlogController {
     @ApiOperation("获得博客分页")
     @PreAuthorize("@ss.hasPermission('blog:blog:query')")
     public CommonResult<PageResult<BlogRespVO>> getBlogPage(@Valid BlogPageReqVO pageVO) {
+        log.info("trance TEST");
         PageResult<BlogDO> pageResult = blogService.getBlogPage(pageVO);
         return success(BlogConvert.INSTANCE.convertPage(pageResult));
     }

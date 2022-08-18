@@ -8,13 +8,16 @@
         <LocalImageContent @onImgSelect="onImgSelect"/>
       </el-tab-pane>
       <el-tab-pane label="本地上传">
-        <el-upload
+        <!-- <el-upload
           class="avatar-uploader"
           action="https://httpbin.org/post"
           :show-file-list="false"
           accept="image/*">
           <i class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        </el-upload> -->
+
+         <imageUpload :limit="1" @input="handleUploadSuccess"/>
+         <!-- TODO 优化上传框的大小 -->
       </el-tab-pane>
       <!-- <el-tab-pane label="网络图片">网络地址</el-tab-pane> -->
     </el-tabs>
@@ -24,14 +27,13 @@
 <script>
   import QiNiuImageContent from "./components/QiNiuImageContent";
   import LocalImageContent from "./components/LocalImageContent";
+  import ImageUpload from '@/components/ImageUpload';
 
   export default {
     name: "ImagePicker",
     components: {
-      QiNiuImageContent,LocalImageContent
-    },
-    data() {
-      return {}
+      QiNiuImageContent,LocalImageContent,
+      ImageUpload
     },
     created() {
     },
@@ -39,6 +41,9 @@
       onImgSelect(url) {
         this.$emit('onImgSelect', url);
       },
+      handleUploadSuccess(url){
+         this.$emit('onImgSelect', url);
+      }
     }
   }
 </script>

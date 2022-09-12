@@ -169,7 +169,7 @@ export const constantRoutes = [
   }, {
     path: '/blogManage',
     component: Layout,
-    hidden: true,
+    hidden: true, 
     redirect: 'noredirect',
     children: [{
         path: 'blog/create',
@@ -177,7 +177,7 @@ export const constantRoutes = [
         name: '新增博客',
         meta: {title: '新增博客', icon: 'form', activeMenu: '/blog/blog'}
       }, {
-        path: 'blog/edit:id(\\d+)',
+        path: 'blog/edit/:id(\\d+)',
         component: (resolve) => require(['@/views/blog/blog/edit'], resolve),
         name: '编辑博客',
         meta: {title: '编辑博客', icon: 'view', activeMenu: '/blog/blog'}

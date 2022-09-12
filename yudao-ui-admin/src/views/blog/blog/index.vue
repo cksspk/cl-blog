@@ -156,6 +156,7 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       const blogId = row.id;
+      // this.$router.push({ path: "/blogManage/blog/create"});
       this.$router.push({ path: "/blogManage/blog/edit/" + blogId});
     },
     /** 提交按钮 */

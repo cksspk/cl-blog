@@ -17,6 +17,18 @@ export function addBlogDraft(data) {
     data: data
   })
 }
+// 修改博客草稿
+export function updateBlogDraft(data) {
+  return request({
+    url: '/blog/blog/draft',
+    method: 'put',
+    data: data
+  })
+}
+
+
+
+
 
 // 更新博客
 export function updateBlog(data) {

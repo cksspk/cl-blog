@@ -238,7 +238,7 @@ export default {
         setTimeout(() => {
           this.loading = false;
           listSimpleTags(query).then(response => {
-              console.log("response", response);
+              // console.log("response", response);
               this.blogTagOptions = response.data;
               this.loading = false;
             }
@@ -257,10 +257,6 @@ export default {
     },
     fetchData(id) {
       getBlog(id).then(response => {
-        if (response.code != 200) {
-          this.msgError(response.msg);
-          return;
-        }
         this.form = response.data;
       })
     },

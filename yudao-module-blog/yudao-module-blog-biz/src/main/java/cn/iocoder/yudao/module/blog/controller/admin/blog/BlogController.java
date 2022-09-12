@@ -54,6 +54,14 @@ public class BlogController {
     }
 
 
+    @PutMapping("/draft")
+    @ApiOperation("更新博客")
+    @PreAuthorize("@ss.hasPermission('blog:blog:update')")
+    public CommonResult<Boolean> draftBlog(@Valid @RequestBody BlogUpdateReqVO updateReqVO) {
+        blogService.updateBlog(updateReqVO);
+        return success(true);
+    }
+
     @PutMapping("/update")
     @ApiOperation("更新博客")
     @PreAuthorize("@ss.hasPermission('blog:blog:update')")

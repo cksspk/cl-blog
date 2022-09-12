@@ -9,6 +9,15 @@ export function createBlog(data) {
   })
 }
 
+// 保存草稿
+export function addBlogDraft(data) {
+  return request({
+    url: '/blog/blog/draft',
+    method: 'post',
+    data: data
+  })
+}
+
 // 更新博客
 export function updateBlog(data) {
   return request({

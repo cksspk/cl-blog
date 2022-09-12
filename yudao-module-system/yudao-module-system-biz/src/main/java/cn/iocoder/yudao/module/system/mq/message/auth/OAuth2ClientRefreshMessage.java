@@ -1,6 +1,8 @@
 package cn.iocoder.yudao.module.system.mq.message.auth;
 
 import cn.iocoder.yudao.framework.mq.core.pubsub.AbstractChannelMessage;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

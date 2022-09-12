@@ -44,7 +44,7 @@ public class BlogController {
         return success(blogService.createBlog(createReqVO));
     }
 
-    @PreAuthorize("@permissionService.hasPermission('blog:blog:add')")
+    @PreAuthorize("@ss.hasPermission('blog:blog:add')")
     @ApiOperation(value = "创建博客草稿")
     @PostMapping("draft")
     public CommonResult draft(@Valid @RequestBody BlogCreateReqVO createReqVO) {

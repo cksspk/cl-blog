@@ -33,14 +33,16 @@
                 </el-col>
                 <el-col :span="4">
                   <el-form-item label-width="60px" label="推荐: " class="postInfo-container-item" prop="support">
-                    <el-switch v-model="form.support" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+                    <el-switch v-model="form.support" :active-value= 1 
+                      :inactive-value= 0
+                      active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="60px" label="评论: " class="postInfo-container-item" prop="comment">
                     <el-radio-group v-model="form.comment">
-                      <el-radio :label="true">开启</el-radio>
-                      <el-radio :label="false">关闭</el-radio>
+                      <el-radio :label="1">开启</el-radio>
+                      <el-radio :label="0">关闭</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>
@@ -144,8 +146,8 @@ export default {
         headerImg: '',
         weight: 1,
         tagTitleList: [],
-        comment: true,
-        support: false
+        comment: 1,
+        support: 0
       },
       loading: false,
       tempRoute: {},
@@ -269,7 +271,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.loading = true;
-          this.form.status = true;
+          this.form.status = 1;
           let obj = JSON.parse(JSON.stringify(this.form));
           if (obj.id == undefined) {
             addBlog(obj).then(response => {
@@ -313,22 +315,14 @@ export default {
       //删除缓存
       MyLocalStorage.Cache.remove("blogCache");
       let obj = JSON.parse(JSON.stringify(this.form));
-      obj.status = false;
+      obj.status = 2;
       if (obj.id == undefined) {
         addBlogDraft(obj).then(response => {
-          if (response.code === 200) {
-            this.msgSuccess("保存草稿成功");
-          } else {
-            this.msgError(response.msg);
-          }
+          this.$modal.msgSuccess("保存草稿成功");
         });
       } else {
         updateBlogDraft(obj).then(response => {
-          if (response.code === 200) {
-            this.msgSuccess("保存草稿成功");
-          } else {
-            this.msgError(response.msg);
-          }
+          this.$modal.msgSuccess("保存草稿成功");
         });
       }
     },

@@ -1,19 +1,19 @@
 package cn.iocoder.yudao.module.blog.service.blog;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
+import cn.iocoder.yudao.module.blog.convert.blog.BlogConvert;
+import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
+import cn.iocoder.yudao.module.blog.dal.mysql.blog.BlogMapper;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.*;
-import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-
-import cn.iocoder.yudao.module.blog.convert.blog.BlogConvert;
-import cn.iocoder.yudao.module.blog.dal.mysql.blog.BlogMapper;
+import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.BLOG_NOT_EXISTS;
 
 /**
  * 博客 Service 实现类
@@ -28,7 +28,7 @@ public class BlogServiceImpl implements BlogService {
     private BlogMapper blogMapper;
 
     @Override
-    public Long createBlog(BlogCreateReqVO createReqVO) {
+    public Long createBlog(BlogPublishCreateReqVO createReqVO) {
         // 插入
         BlogDO blog = BlogConvert.INSTANCE.convert(createReqVO);
         blogMapper.insert(blog);
@@ -37,11 +37,30 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void updateBlog(BlogUpdateReqVO updateReqVO) {
+    public void updateBlog(BlogPublishUpdateReqVO updateReqVO) {
         // 校验存在
         this.validateBlogExists(updateReqVO.getId());
         // 更新
         BlogDO updateObj = BlogConvert.INSTANCE.convert(updateReqVO);
+        blogMapper.updateById(updateObj);
+    }
+
+
+    @Override
+    public Long createBlogDraft(BlogDraftCreateReqVO reqVO) {
+        // 插入
+        BlogDO blog = BlogConvert.INSTANCE.convert(reqVO);
+        blogMapper.insert(blog);
+        // 返回
+        return blog.getId();
+    }
+
+    @Override
+    public void updateBlogDraft(BlogDraftUpdateReqVO reqVO) {
+        // 校验存在
+        this.validateBlogExists(reqVO.getId());
+        // 更新
+        BlogDO updateObj = BlogConvert.INSTANCE.convert(reqVO);
         blogMapper.updateById(updateObj);
     }
 
@@ -74,9 +93,5 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectPage(pageReqVO);
     }
 
-    @Override
-    public List<BlogDO> getBlogList(BlogExportReqVO exportReqVO) {
-        return blogMapper.selectList(exportReqVO);
-    }
 
 }

@@ -1,31 +1,25 @@
 package cn.iocoder.yudao.module.blog.controller.admin.blog;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.security.access.prepost.PreAuthorize;
-import io.swagger.annotations.*;
-
-import javax.validation.constraints.*;
-import javax.validation.*;
-import javax.servlet.http.*;
-import java.util.*;
-import java.io.IOException;
-
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
-import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
-
-import cn.iocoder.yudao.framework.excel.core.util.ExcelUtils;
-
-import cn.iocoder.yudao.framework.operatelog.core.annotations.OperateLog;
-import static cn.iocoder.yudao.framework.operatelog.core.enums.OperateTypeEnum.*;
-
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
 import cn.iocoder.yudao.module.blog.convert.blog.BlogConvert;
+import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
 import cn.iocoder.yudao.module.blog.service.blog.BlogService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
+
+import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Api(tags = "管理后台 - 博客")
 @RestController
@@ -38,37 +32,39 @@ public class BlogController {
     private BlogService blogService;
 
     @PostMapping("/create")
-    @ApiOperation("创建博客")
+    @ApiOperation("创建博客（发布）")
     @PreAuthorize("@ss.hasPermission('blog:blog:create')")
-    public CommonResult<Long> createBlog(@Valid @RequestBody BlogCreateReqVO createReqVO) {
+    public CommonResult<Long> createBlog(@Valid @RequestBody BlogPublishCreateReqVO createReqVO) {
         return success(blogService.createBlog(createReqVO));
-    }
-
-    @PreAuthorize("@ss.hasPermission('blog:blog:add')")
-    @ApiOperation(value = "创建博客草稿")
-    @PostMapping("draft")
-    public CommonResult draft(@Valid @RequestBody BlogCreateReqVO createReqVO) {
-        // TODO 设置草稿状态
-        createReqVO.setStatus(-1);
-        return success(blogService.createBlog(createReqVO));
-    }
-
-
-    @PutMapping("/draft")
-    @ApiOperation("更新博客")
-    @PreAuthorize("@ss.hasPermission('blog:blog:update')")
-    public CommonResult<Boolean> draftBlog(@Valid @RequestBody BlogUpdateReqVO updateReqVO) {
-        blogService.updateBlog(updateReqVO);
-        return success(true);
     }
 
     @PutMapping("/update")
-    @ApiOperation("更新博客")
+    @ApiOperation("更新博客（发布）")
     @PreAuthorize("@ss.hasPermission('blog:blog:update')")
-    public CommonResult<Boolean> updateBlog(@Valid @RequestBody BlogUpdateReqVO updateReqVO) {
+    public CommonResult<Boolean> updateBlog(@Valid @RequestBody BlogPublishUpdateReqVO updateReqVO) {
         blogService.updateBlog(updateReqVO);
         return success(true);
     }
+
+
+    @PreAuthorize("@ss.hasPermission('blog:blog:draftadd')")
+    @ApiOperation(value = "创建博客（草稿）")
+    @PostMapping("/draft/create")
+    public CommonResult draft(@Valid @RequestBody BlogDraftCreateReqVO createReqVO) {
+        return success(blogService.createBlogDraft(createReqVO));
+    }
+
+    @PutMapping("/draft/update")
+    @ApiOperation("更新博客（草稿）")
+    @PreAuthorize("@ss.hasPermission('blog:blog:draftupdate')")
+    public CommonResult<Boolean> draftBlog(@Valid @RequestBody BlogDraftUpdateReqVO updateReqVO) {
+        blogService.updateBlogDraft(updateReqVO);
+        return success(true);
+    }
+
+
+
+
 
     @DeleteMapping("/delete")
     @ApiOperation("删除博客")
@@ -107,16 +103,5 @@ public class BlogController {
         return success(BlogConvert.INSTANCE.convertPage(pageResult));
     }
 
-    @GetMapping("/export-excel")
-    @ApiOperation("导出博客 Excel")
-    @PreAuthorize("@ss.hasPermission('blog:blog:export')")
-    @OperateLog(type = EXPORT)
-    public void exportBlogExcel(@Valid BlogExportReqVO exportReqVO,
-              HttpServletResponse response) throws IOException {
-        List<BlogDO> list = blogService.getBlogList(exportReqVO);
-        // 导出 Excel
-        List<BlogExcelVO> datas = BlogConvert.INSTANCE.convertList02(list);
-        ExcelUtils.write(response, "博客.xls", "数据", BlogExcelVO.class, datas);
-    }
 
 }

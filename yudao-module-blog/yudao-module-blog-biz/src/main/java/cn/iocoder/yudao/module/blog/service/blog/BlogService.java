@@ -1,10 +1,12 @@
 package cn.iocoder.yudao.module.blog.service.blog;
 
-import java.util.*;
-import javax.validation.*;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
+
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 博客 Service 接口
@@ -19,14 +21,32 @@ public interface BlogService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createBlog(@Valid BlogCreateReqVO createReqVO);
+    Long createBlog(@Valid BlogPublishCreateReqVO createReqVO);
 
     /**
      * 更新博客
      *
      * @param updateReqVO 更新信息
      */
-    void updateBlog(@Valid BlogUpdateReqVO updateReqVO);
+    void updateBlog(@Valid BlogPublishUpdateReqVO updateReqVO);
+
+
+
+
+    /**
+     * 创建博客草稿
+     *
+     * @param createReqVO 创建信息
+     * @return 编号
+     */
+    Long createBlogDraft(@Valid BlogDraftCreateReqVO createReqVO);
+
+    /**
+     * 更新博客草稿
+     *
+     * @param updateReqVO 更新信息
+     */
+    void updateBlogDraft(@Valid BlogDraftUpdateReqVO updateReqVO);
 
     /**
      * 删除博客
@@ -59,12 +79,6 @@ public interface BlogService {
      */
     PageResult<BlogDO> getBlogPage(BlogPageReqVO pageReqVO);
 
-    /**
-     * 获得博客列表, 用于 Excel 导出
-     *
-     * @param exportReqVO 查询条件
-     * @return 博客列表
-     */
-    List<BlogDO> getBlogList(BlogExportReqVO exportReqVO);
+
 
 }

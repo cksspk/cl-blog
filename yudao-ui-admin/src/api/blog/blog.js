@@ -9,27 +9,6 @@ export function createBlog(data) {
   })
 }
 
-// 保存草稿
-export function addBlogDraft(data) {
-  return request({
-    url: '/blog/blog/draft',
-    method: 'post',
-    data: data
-  })
-}
-// 修改博客草稿
-export function updateBlogDraft(data) {
-  return request({
-    url: '/blog/blog/draft',
-    method: 'put',
-    data: data
-  })
-}
-
-
-
-
-
 // 更新博客
 export function updateBlog(data) {
   return request({
@@ -38,6 +17,26 @@ export function updateBlog(data) {
     data: data
   })
 }
+
+// 保存草稿
+export function addBlogDraft(data) {
+  return request({
+    url: '/blog/blog/draft/create',
+    method: 'post',
+    data: data
+  })
+}
+// 修改博客草稿
+export function updateBlogDraft(data) {
+  return request({
+    url: '/blog/blog/draft/update',
+    method: 'put',
+    data: data
+  })
+}
+
+
+
 
 // 删除博客
 export function deleteBlog(id) {

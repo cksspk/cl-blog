@@ -1,30 +1,27 @@
 package cn.iocoder.yudao.module.blog.service.blog;
 
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
-
-import javax.annotation.Resource;
-
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
-
-import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
+import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPublishCreateReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPublishUpdateReqVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
 import cn.iocoder.yudao.module.blog.dal.mysql.blog.BlogMapper;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.Import;
 
 import javax.annotation.Resource;
-import org.springframework.context.annotation.Import;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-import static cn.hutool.core.util.RandomUtil.*;
-import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.*;
-import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.*;
-import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.*;
-import static cn.iocoder.yudao.framework.common.util.object.ObjectUtils.*;
-import static cn.iocoder.yudao.framework.common.util.date.DateUtils.*;
+import static cn.iocoder.yudao.framework.common.util.object.ObjectUtils.cloneIgnoreId;
+import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.assertPojoEquals;
+import static cn.iocoder.yudao.framework.test.core.util.AssertUtils.assertServiceException;
+import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomLongId;
+import static cn.iocoder.yudao.framework.test.core.util.RandomUtils.randomPojo;
+import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.BLOG_NOT_EXISTS;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 /**
 * {@link BlogServiceImpl} 的单元测试类
@@ -43,7 +40,7 @@ public class BlogServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testCreateBlog_success() {
         // 准备参数
-        BlogCreateReqVO reqVO = randomPojo(BlogCreateReqVO.class);
+        BlogPublishCreateReqVO reqVO = randomPojo(BlogPublishCreateReqVO.class);
 
         // 调用
         Long blogId = blogService.createBlog(reqVO);
@@ -60,7 +57,7 @@ public class BlogServiceImplTest extends BaseDbUnitTest {
         BlogDO dbBlog = randomPojo(BlogDO.class);
         blogMapper.insert(dbBlog);// @Sql: 先插入出一条存在的数据
         // 准备参数
-        BlogUpdateReqVO reqVO = randomPojo(BlogUpdateReqVO.class, o -> {
+        BlogPublishUpdateReqVO reqVO = randomPojo(BlogPublishUpdateReqVO.class, o -> {
             o.setId(dbBlog.getId()); // 设置更新的 ID
         });
 
@@ -74,7 +71,7 @@ public class BlogServiceImplTest extends BaseDbUnitTest {
     @Test
     public void testUpdateBlog_notExists() {
         // 准备参数
-        BlogUpdateReqVO reqVO = randomPojo(BlogUpdateReqVO.class);
+        BlogPublishUpdateReqVO reqVO = randomPojo(BlogPublishUpdateReqVO.class);
 
         // 调用, 并断言异常
         assertServiceException(() -> blogService.updateBlog(reqVO), BLOG_NOT_EXISTS);

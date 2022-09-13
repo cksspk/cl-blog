@@ -80,5 +80,10 @@ public interface BlogService {
     PageResult<BlogDO> getBlogPage(BlogPageReqVO pageReqVO);
 
 
-
+    /**
+     * 修改博客推荐
+     * @param id 编号
+     * @param support 是否推荐
+     */
+    void updateBlogSupport(Long id, Integer support);
 }

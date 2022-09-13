@@ -35,7 +35,14 @@ export function updateBlogDraft(data) {
   })
 }
 
-
+// 修改博客推荐
+export function changeBlogSupport(data) {
+  return request({
+    url: '/blog/blog/support',
+    method: 'put',
+    data: data
+  })
+}
 
 
 // 删除博客
@@ -63,12 +70,4 @@ export function getBlogPage(query) {
   })
 }
 
-// 导出博客 Excel
-export function exportBlogExcel(query) {
-  return request({
-    url: '/blog/blog/export-excel',
-    method: 'get',
-    params: query,
-    responseType: 'blob'
-  })
-}
+

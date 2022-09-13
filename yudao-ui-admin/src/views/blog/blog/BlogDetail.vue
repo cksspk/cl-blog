@@ -184,11 +184,11 @@ export default {
         cancelButtonText: '删除本地记录',
         type: 'warning'
       }).then(() => {
-        this.msgSuccess("已成功恢复!");
+        this.$modal.msgSuccess("已成功恢复!");
         fetch = false;
         this.form = blogCache;
       }).catch(() => {
-        this.msgInfo("已删除!");
+        this.$modal.msgSuccess("已删除!");
         //删除缓存
         MyLocalStorage.Cache.remove("blogCache");
       });

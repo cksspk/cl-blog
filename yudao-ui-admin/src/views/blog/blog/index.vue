@@ -33,10 +33,10 @@
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['blog:blog:create']">新增</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
                    v-hasPermi="['blog:blog:export']">导出</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -48,9 +48,27 @@
       <el-table-column label="摘要" align="center" prop="summary" />
       <el-table-column label="封面" align="center" prop="headerImgType" />
       <el-table-column label="评论" align="center" prop="comment" />
-      <el-table-column label="推荐" align="center" prop="support" />
-      <el-table-column label="状态" align="center" prop="status" />
-      <el-table-column label=" 权重 " align="center" prop="weight" />
+      <el-table-column label="推荐" align="center" prop="support" >
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.support" 
+            :active-value="1" :inactive-value="0" 
+            @change="handleSupportChange(scope.row)" 
+            active-color="#13ce66"
+            inactive-color="#ff4949"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="状态" align="center" prop="status" >
+        <template slot-scope="scope">
+          <el-tag v-if="scope.row.status == 1">发布</el-tag>
+          <el-tag v-else type="warning">草稿</el-tag>
+        </template>
+      </el-table-column>      
+      <el-table-column label=" 权重 " align="center" prop="weight" >
+        <template slot-scope="scope">
+          <el-rate v-model="scope.row.weight" :max="5" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" disabled
+                   :low-threshold="1" :high-threshold="5" style="display:inline-block"/>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -73,7 +91,7 @@
 </template>
 
 <script>
-import { createBlog, updateBlog, deleteBlog, getBlog, getBlogPage, exportBlogExcel } from "@/api/blog/blog";
+import { createBlog, updateBlog, deleteBlog, getBlog, getBlogPage, changeBlogSupport } from "@/api/blog/blog";
 import Editor from '@/components/Editor';
 
 export default {
@@ -192,19 +210,24 @@ export default {
           this.$modal.msgSuccess("删除成功");
         }).catch(() => {});
     },
-    /** 导出按钮操作 */
-    handleExport() {
-      // 处理查询参数
-      let params = {...this.queryParams};
-      params.pageNo = undefined;
-      params.pageSize = undefined;
-      this.$modal.confirm('是否确认导出所有博客数据项?').then(() => {
-          this.exportLoading = true;
-          return exportBlogExcel(params);
-        }).then(response => {
-          this.$download.excel(response, '博客.xls');
-          this.exportLoading = false;
-        }).catch(() => {});
+    handleSupportChange(row) {
+      let text = row.support ? "推荐" : "取消推荐";
+      this.$confirm('确认要' + text + '"' + row.title + '"博客吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function () {
+        console.log("row:", row);
+        const data = {
+          id: row.id,
+          support: row.support
+        }
+        return changeBlogSupport(data);
+      }).then((response) => {
+        this.$modal.msgSuccess(text + "成功");
+      }).catch(function () {
+        row.support = row.support === 1 ? 0 : 1;
+      });
     }
   }
 };

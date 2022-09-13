@@ -14,6 +14,7 @@ import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.BLOG_NOT_EXISTS;
+import static cn.iocoder.yudao.module.system.enums.ErrorCodeConstants.USER_NOT_EXISTS;
 
 /**
  * 博客 Service 实现类
@@ -93,5 +94,20 @@ public class BlogServiceImpl implements BlogService {
         return blogMapper.selectPage(pageReqVO);
     }
 
+    @Override
+    public void updateBlogSupport(Long id, Integer support) {
+        checkBlogExists(id);
+        BlogDO blogDO = new BlogDO().setId(id).setSupport(support);
+        blogMapper.updateById(blogDO);
+    }
 
+    private void checkBlogExists(Long id) {
+        if (id == null) {
+            return;
+        }
+        BlogDO user = blogMapper.selectById(id);
+        if (user == null) {
+            throw exception(BLOG_NOT_EXISTS);
+        }
+    }
 }

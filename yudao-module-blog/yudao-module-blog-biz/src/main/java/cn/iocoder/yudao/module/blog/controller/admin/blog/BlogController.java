@@ -63,6 +63,14 @@ public class BlogController {
     }
 
 
+    @PutMapping("/support")
+    @ApiOperation("更新博客推荐状态")
+    @PreAuthorize("@ss.hasPermission('blog:blog:support')")
+    public CommonResult<Boolean> support(@Valid @RequestBody BlogSupportStatusReqVO reqVO) {
+        blogService.updateBlogSupport(reqVO.getId(), reqVO.getSupport());
+        return success(true);
+    }
+
 
 
 

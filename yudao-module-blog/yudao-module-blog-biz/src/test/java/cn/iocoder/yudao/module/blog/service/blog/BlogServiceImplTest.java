@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.blog.service.blog;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.test.core.ut.BaseDbUnitTest;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPageRespVO;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPublishCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.BlogPublishUpdateReqVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
@@ -167,84 +168,13 @@ public class BlogServiceImplTest extends BaseDbUnitTest {
        reqVO.setCreateTime((new Date[]{}));
 
        // 调用
-       PageResult<BlogDO> pageResult = blogService.getBlogPage(reqVO);
+       PageResult<BlogPageRespVO> pageResult = blogService.getBlogPage(reqVO);
        // 断言
        assertEquals(1, pageResult.getTotal());
        assertEquals(1, pageResult.getList().size());
        assertPojoEquals(dbBlog, pageResult.getList().get(0));
     }
 
-    @Test
-    @Disabled  // TODO 请修改 null 为需要的值，然后删除 @Disabled 注解
-    public void testGetBlogList() {
-       // mock 数据
-       BlogDO dbBlog = randomPojo(BlogDO.class, o -> { // 等会查询到
-           o.setCategoryId(null);
-           o.setTitle(null);
-           o.setSummary(null);
-           o.setHeaderImgType(null);
-           o.setHeaderImg(null);
-           o.setHtmlContent(null);
-           o.setContent(null);
-           o.setStatus(null);
-           o.setComment(null);
-           o.setSupport(null);
-           o.setWeight(null);
-           o.setLikes(null);
-           o.setClick(null);
-           o.setCreateTime(null);
-       });
-       blogMapper.insert(dbBlog);
-       // 测试 categoryId 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setCategoryId(null)));
-       // 测试 title 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setTitle(null)));
-       // 测试 summary 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setSummary(null)));
-       // 测试 headerImgType 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setHeaderImgType(null)));
-       // 测试 headerImg 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setHeaderImg(null)));
-       // 测试 htmlContent 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setHtmlContent(null)));
-       // 测试 content 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setContent(null)));
-       // 测试 status 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setStatus(null)));
-       // 测试 comment 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setComment(null)));
-       // 测试 support 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setSupport(null)));
-       // 测试 weight 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setWeight(null)));
-       // 测试 like 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setLikes(null)));
-       // 测试 click 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setClick(null)));
-       // 测试 createTime 不匹配
-       blogMapper.insert(cloneIgnoreId(dbBlog, o -> o.setCreateTime(null)));
-       // 准备参数
-       BlogExportReqVO reqVO = new BlogExportReqVO();
-       reqVO.setCategoryId(null);
-       reqVO.setTitle(null);
-       reqVO.setSummary(null);
-       reqVO.setHeaderImgType(null);
-       reqVO.setHeaderImg(null);
-       reqVO.setHtmlContent(null);
-       reqVO.setContent(null);
-       reqVO.setStatus(null);
-       reqVO.setComment(null);
-       reqVO.setSupport(null);
-       reqVO.setWeight(null);
-       reqVO.setLikes(null);
-       reqVO.setClick(null);
-       reqVO.setCreateTime((new Date[]{}));
 
-       // 调用
-       List<BlogDO> list = blogService.getBlogList(reqVO);
-       // 断言
-       assertEquals(1, list.size());
-       assertPojoEquals(dbBlog, list.get(0));
-    }
 
 }

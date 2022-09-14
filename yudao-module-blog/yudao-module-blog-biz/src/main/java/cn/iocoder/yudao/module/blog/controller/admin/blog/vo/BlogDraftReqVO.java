@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.util.List;
+
 @ApiModel("管理后台 - 博客（草稿） RequestBase VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -20,6 +22,8 @@ public class BlogDraftReqVO extends BlogBaseVO {
 
     @ApiModelProperty(value = "权重")
     private Long weight;
+
+
 
 
 }

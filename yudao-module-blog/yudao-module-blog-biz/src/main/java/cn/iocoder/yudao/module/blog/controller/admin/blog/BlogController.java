@@ -80,14 +80,19 @@ public class BlogController {
     }
 
 
-    // TODO 增加分类名称
     @GetMapping("/page")
     @ApiOperation("获得博客分页")
     @PreAuthorize("@ss.hasPermission('blog:blog:query')")
-    public CommonResult<PageResult<BlogRespVO>> getBlogPage(@Valid BlogPageReqVO pageVO) {
-        log.info("trance TEST");
-        PageResult<BlogDO> pageResult = blogService.getBlogPage(pageVO);
-        return success(BlogConvert.INSTANCE.convertPage(pageResult));
+    public CommonResult<PageResult<BlogPageRespVO>> getBlogPage(@Valid BlogPageReqVO pageVO) {
+        return success(blogService.getBlogPage(pageVO));
+    }
+
+    @GetMapping("/get")
+    @ApiOperation("获得博客")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
+    @PreAuthorize("@ss.hasPermission('blog:blog:query')")
+    public CommonResult<BlogRespVO> getBlog(@RequestParam("id") Long id) {
+        return success(blogService.getBlogWithTag(id));
     }
 
 
@@ -100,14 +105,7 @@ public class BlogController {
         return success(true);
     }
 
-    @GetMapping("/get")
-    @ApiOperation("获得博客")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    @PreAuthorize("@ss.hasPermission('blog:blog:query')")
-    public CommonResult<BlogRespVO> getBlog(@RequestParam("id") Long id) {
-        BlogDO blog = blogService.getBlog(id);
-        return success(BlogConvert.INSTANCE.convert(blog));
-    }
+
 
     @GetMapping("/list")
     @ApiOperation("获得博客列表")

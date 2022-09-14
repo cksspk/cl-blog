@@ -72,7 +72,7 @@
                         :loading="loading"
                         :remote-method="getRemoteTagList" allow-create placeholder="请选择文章标签">
                         <el-option v-for="item in blogTagOptions" :key="item.id" :label="item.title"
-                                   :value="item.id"/>
+                                   :value="item.title"/>
                       </el-select>
                     </el-form-item>
                   </el-col>
@@ -177,27 +177,30 @@ export default {
     }
   },
   created() {
-    var blogCache = MyLocalStorage.Cache.get("blogCache");
-    var fetch = true;
-    if (blogCache != undefined && blogCache.content != undefined && blogCache.content.length != 0) {
-      this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
-        confirmButtonText: '继续编辑',
-        cancelButtonText: '删除本地记录',
-        type: 'warning'
-      }).then(() => {
-        this.$modal.msgSuccess("已成功恢复!");
-        fetch = false;
-        this.form = blogCache;
-      }).catch(() => {
-        this.$modal.msgSuccess("已删除!");
-        //删除缓存
-        MyLocalStorage.Cache.remove("blogCache");
-      });
-    }
-    if (fetch&&this.isEdit) {
+
+    if (this.isEdit) {
         const id = this.$route.params && this.$route.params.id;
         this.fetchData(id);
+    }else {
+      var blogCache = MyLocalStorage.Cache.get("blogCache");
+      var fetch = true;
+      if (blogCache != undefined && blogCache.content != undefined && blogCache.content.length != 0) {
+        this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
+          confirmButtonText: '继续编辑',
+          cancelButtonText: '删除本地记录',
+          type: 'warning'
+        }).then(() => {
+          this.$modal.msgSuccess("已成功恢复!");
+          fetch = false;
+          this.form = blogCache;
+        }).catch(() => {
+          this.$modal.msgSuccess("已删除!");
+          //删除缓存
+          MyLocalStorage.Cache.remove("blogCache");
+        });
+      }
     }
+    
     this.tempRoute = Object.assign({}, this.$route);
     //设置category
     this.getCategory();

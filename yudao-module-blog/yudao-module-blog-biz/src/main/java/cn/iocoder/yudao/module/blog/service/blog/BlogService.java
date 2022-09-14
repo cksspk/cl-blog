@@ -77,7 +77,7 @@ public interface BlogService {
      * @param pageReqVO 分页查询
      * @return 博客分页
      */
-    PageResult<BlogDO> getBlogPage(BlogPageReqVO pageReqVO);
+    PageResult<BlogPageRespVO> getBlogPage(BlogPageReqVO pageReqVO);
 
 
     /**
@@ -93,4 +93,13 @@ public interface BlogService {
      * @param support 是否推荐
      */
     void updateCommentSupport(Long id, Integer support);
+
+
+    /**
+     * 获得博客 （带有标签）
+     *
+     * @param id 编号
+     * @return 博客
+     */
+    BlogRespVO getBlogWithTag(Long id);
 }

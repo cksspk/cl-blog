@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class BlogDraftUpdateReqVO extends BlogBaseVO {
+public class BlogDraftUpdateReqVO extends BlogDraftReqVO {
 
     @ApiModelProperty(value = "博客编号", required = true)
     @NotNull(message = "博客编号不能为空")

@@ -74,4 +74,19 @@ public interface TagService {
      * @return 博客标签列表列表
      */
     List<TagDO> getTags(String title);
+
+    /**
+     * 更新标签关系
+     * @param blogId    博客编号
+     * @param tagTitleList 标签列表
+     */
+    void updateTagMapping(Long blogId, List<String> tagTitleList);
+
+    /**
+     * 根据 博客编号获取标签列表
+     *
+     * @param blogId 博客编号
+     * @return 标签列表
+     */
+    List<TagDO> getTagListByBlogId(Long blogId);
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
 * 博客 Base VO，提供给添加、修改、详细的子 VO 使用
@@ -46,5 +47,9 @@ public class BlogBaseVO {
 
     @ApiModelProperty(value = " 点击数 ")
     private Long click;
+
+    @ApiModelProperty(value = "标签名集合")
+    private List<String> tagTitleList;
+
 
 }

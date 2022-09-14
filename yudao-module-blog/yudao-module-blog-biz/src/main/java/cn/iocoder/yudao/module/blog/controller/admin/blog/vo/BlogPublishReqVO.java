@@ -8,6 +8,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @ApiModel("管理后台 - 博客（发布） Request VO")
 @Data
@@ -26,6 +27,7 @@ public class BlogPublishReqVO extends BlogBaseVO {
     @ApiModelProperty(value = "权重")
     @Range(min = 1, max = 5, message = "权重长度为{min}~{max}个字符")
     private Long weight;
+
 
 
 }

@@ -81,7 +81,7 @@ public class TagController {
     @GetMapping("/list-all-simple")
     @ApiOperation(value = "获取博客标签精简信息列表", notes = "主要用于前端的下拉选项")
     public CommonResult<List<TagSimpleRespVO>> getSimpleTags(String title) {
-        // 获得岗位列表，只要开启状态的
+        // 获得标签列表，只要开启状态的
         List<TagDO> list = tagService.getTags(title);
         // 排序后，返回给前端
 //        list.sort(Comparator.comparing(TagDO::getSort)); //TODO 可增加排序

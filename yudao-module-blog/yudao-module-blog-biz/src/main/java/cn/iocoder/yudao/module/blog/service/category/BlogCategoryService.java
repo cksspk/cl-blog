@@ -2,6 +2,8 @@ package cn.iocoder.yudao.module.blog.service.category;
 
 import java.util.*;
 import javax.validation.*;
+
+import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.blog.controller.admin.category.vo.*;
 import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
@@ -81,4 +83,8 @@ public interface BlogCategoryService {
      * @return 博客标签列表列表
      */
     List<BlogCategoryDO> getCategorys();
+
+    default Map<Long, BlogCategoryDO> getCategoryMapByIds(List<Long> categoryIds) {
+        return CollectionUtils.convertMap(getCategoryList(categoryIds), BlogCategoryDO::getId);
+    }
 }

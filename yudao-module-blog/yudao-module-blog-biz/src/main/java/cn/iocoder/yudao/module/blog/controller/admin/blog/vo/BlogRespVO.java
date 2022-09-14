@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel("管理后台 - 博客 Response VO")
 @Data
@@ -28,5 +29,7 @@ public class BlogRespVO extends BlogBaseVO {
 
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
+
+
 
 }

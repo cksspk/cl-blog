@@ -1,7 +1,13 @@
 package cn.iocoder.yudao.module.blog.service.tag;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
+import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
+import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagMappingDO;
+import cn.iocoder.yudao.module.blog.dal.mysql.tag.TagMappingBatchInsetMapper;
+import cn.iocoder.yudao.module.blog.dal.mysql.tag.TagMappingMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +34,11 @@ public class TagServiceImpl implements TagService {
 
     @Resource
     private TagMapper tagMapper;
+    @Resource
+    private TagMappingMapper tagMappingMapper;
+
+    @Resource
+    private TagMappingBatchInsetMapper tagMappingBatchInsetMapper;
 
     @Override
     public Long createTag(TagCreateReqVO reqVO) {
@@ -124,4 +135,42 @@ public class TagServiceImpl implements TagService {
         }
     }
 
+
+    @Override
+    public void updateTagMapping(Long blogId, List<String> tagTitleList) {
+        //删除该Id下的所有关联
+        tagMappingMapper.deleteTagMappingByBlogId(blogId);
+
+        if (CollUtil.isNotEmpty(tagTitleList)) {
+            // 批量插入
+            List<TagMappingDO> list = new ArrayList<>();
+            for (String title : tagTitleList) {
+                //搜索所有的tag
+                TagDO tag = tagMapper.selectByTitle(title.trim());
+                if (tag != null) {
+                    list.add(new TagMappingDO().setBlogId(blogId).setTagId(tag.getId()));
+                } else {
+                    TagDO temp = new TagDO().setTitle(title.trim()).setColor(
+                            StrUtil.format("rgba({}, {}, {}, {})",
+                            RandomUtil.randomInt(255),
+                                    RandomUtil.randomInt(255),
+                                    RandomUtil.randomInt(255), 1));
+                    tagMapper.insert(temp);
+                    list.add(new TagMappingDO().setBlogId(blogId).setTagId(temp.getId()));
+                }
+            }
+            tagMappingBatchInsetMapper.saveBatch(list);
+        }
+    }
+
+
+    @Override
+    public List<TagDO> getTagListByBlogId(Long blogId) {
+        List<TagMappingDO> tagMappingDOS = tagMappingMapper.selectTagMappingByBlogId(blogId);
+        if (CollUtil.isEmpty(tagMappingDOS)) {
+            return Collections.emptyList();
+        }
+        Set<Long> tagIds = CollectionUtils.convertSet(tagMappingDOS, TagMappingDO::getTagId);
+        return tagMapper.selectBatchIds(tagIds);
+    }
 }

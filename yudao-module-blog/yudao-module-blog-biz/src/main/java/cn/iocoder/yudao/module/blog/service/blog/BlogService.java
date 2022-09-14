@@ -81,9 +81,16 @@ public interface BlogService {
 
 
     /**
-     * 修改博客推荐
+     * 修改博客推荐状态
      * @param id 编号
      * @param support 是否推荐
      */
     void updateBlogSupport(Long id, Integer support);
+
+    /**
+     * 修改博客评论状态
+     * @param id 编号
+     * @param support 是否推荐
+     */
+    void updateCommentSupport(Long id, Integer support);
 }

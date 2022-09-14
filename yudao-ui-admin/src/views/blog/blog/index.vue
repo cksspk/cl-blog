@@ -46,8 +46,15 @@
       <el-table-column label="标题" align="center" prop="title" />
       <el-table-column label="分类" align="center" prop="categoryId" />
       <el-table-column label="摘要" align="center" prop="summary" />
-      <el-table-column label="封面" align="center" prop="headerImgType" />
-      <el-table-column label="评论" align="center" prop="comment" />
+      <!-- <el-table-column label="封面" align="center" prop="headerImgType" /> -->
+      <el-table-column label="评论" align="center" prop="comment">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.comment" 
+            :active-value="0" :inactive-value="1" 
+            @change="handleCommentChange(scope.row)" 
+            />
+        </template>
+      </el-table-column>
       <el-table-column label="推荐" align="center" prop="support" >
         <template slot-scope="scope">
           <el-switch v-model="scope.row.support" 
@@ -91,7 +98,8 @@
 </template>
 
 <script>
-import { createBlog, updateBlog, deleteBlog, getBlog, getBlogPage, changeBlogSupport } from "@/api/blog/blog";
+import { createBlog, updateBlog, deleteBlog, getBlog, getBlogPage, 
+  changeBlogSupport, changeBlogComment } from "@/api/blog/blog";
 import Editor from '@/components/Editor';
 
 export default {
@@ -210,6 +218,7 @@ export default {
           this.$modal.msgSuccess("删除成功");
         }).catch(() => {});
     },
+    /** 推荐状态修改 */
     handleSupportChange(row) {
       let text = row.support ? "推荐" : "取消推荐";
       this.$confirm('确认要' + text + '"' + row.title + '"博客吗?', "警告", {
@@ -217,18 +226,28 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(function () {
-        console.log("row:", row);
-        const data = {
-          id: row.id,
-          support: row.support
-        }
-        return changeBlogSupport(data);
+        return changeBlogSupport(row.id, row.support);
       }).then((response) => {
         this.$modal.msgSuccess(text + "成功");
       }).catch(function () {
         row.support = row.support === 1 ? 0 : 1;
       });
-    }
-  }
+    },
+    /** 评论状态修改 */
+    handleCommentChange(row) {
+          let text = row.comment === 0 ? "开启评论" : "关闭评论";
+          this.$confirm('确认要"' + text + '""' + row.title + '"博客吗?', "警告", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          }).then(function () {
+            return changeBlogComment(row.id, row.comment);
+          }).then((response) => {
+              this.$modal.msgSuccess(text + "成功");
+          }).catch(function () {
+            row.comment = row.comment === 1 ? 0 : 1;
+          });
+        },
+    },
 };
 </script>

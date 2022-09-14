@@ -35,10 +35,27 @@ export function updateBlogDraft(data) {
   })
 }
 
-// 修改博客推荐
-export function changeBlogSupport(data) {
+// 修改推荐状态 
+export function changeBlogSupport(id, support) {
+  const data = {
+    id,
+    support
+  }
   return request({
     url: '/blog/blog/support',
+    method: 'put',
+    data: data
+  })
+}
+
+// 修改推荐状态 
+export function changeBlogComment(id, comment) {
+  const data = {
+    id,
+    comment
+  }
+  return request({
+    url: '/blog/blog/comment',
     method: 'put',
     data: data
   })

@@ -1,9 +1,10 @@
 package cn.iocoder.yudao.module.blog.dal.dataobject.blog;
 
-import lombok.*;
-import java.util.*;
-import com.baomidou.mybatisplus.annotation.*;
 import cn.iocoder.yudao.framework.mybatis.core.dataobject.BaseDO;
+import com.baomidou.mybatisplus.annotation.KeySequence;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
 
 /**
  * 博客 DO
@@ -58,7 +59,7 @@ public class BlogDO extends BaseDO {
      */
     private Integer status;
     /**
-     *  是否允许评论,	    1表示允许,	    0表示不允许 
+     *  是否允许评论
      */
     private Integer comment;
     /**

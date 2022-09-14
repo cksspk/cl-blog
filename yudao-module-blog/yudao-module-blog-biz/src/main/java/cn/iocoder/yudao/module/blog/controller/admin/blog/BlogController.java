@@ -71,6 +71,14 @@ public class BlogController {
         return success(true);
     }
 
+    @PutMapping("/comment")
+    @ApiOperation("修改博客评论状态")
+    @PreAuthorize("@ss.hasPermission('blog:blog:comment')")
+    public CommonResult<Boolean> comment(@Valid @RequestBody BlogCommentStatusReqVO reqVO) {
+        blogService.updateCommentSupport(reqVO.getId(), reqVO.getComment());
+        return success(true);
+    }
+
 
 
 

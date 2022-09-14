@@ -80,6 +80,15 @@ public class BlogController {
     }
 
 
+    // TODO 增加分类名称
+    @GetMapping("/page")
+    @ApiOperation("获得博客分页")
+    @PreAuthorize("@ss.hasPermission('blog:blog:query')")
+    public CommonResult<PageResult<BlogRespVO>> getBlogPage(@Valid BlogPageReqVO pageVO) {
+        log.info("trance TEST");
+        PageResult<BlogDO> pageResult = blogService.getBlogPage(pageVO);
+        return success(BlogConvert.INSTANCE.convertPage(pageResult));
+    }
 
 
     @DeleteMapping("/delete")
@@ -110,14 +119,7 @@ public class BlogController {
         return success(BlogConvert.INSTANCE.convertList(list));
     }
 
-    @GetMapping("/page")
-    @ApiOperation("获得博客分页")
-    @PreAuthorize("@ss.hasPermission('blog:blog:query')")
-    public CommonResult<PageResult<BlogRespVO>> getBlogPage(@Valid BlogPageReqVO pageVO) {
-        log.info("trance TEST");
-        PageResult<BlogDO> pageResult = blogService.getBlogPage(pageVO);
-        return success(BlogConvert.INSTANCE.convertPage(pageResult));
-    }
+
 
 
 }

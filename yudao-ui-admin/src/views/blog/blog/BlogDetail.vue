@@ -33,16 +33,17 @@
                 </el-col>
                 <el-col :span="4">
                   <el-form-item label-width="60px" label="推荐: " class="postInfo-container-item" prop="support">
-                    <el-switch v-model="form.support" :active-value= 1 
-                      :inactive-value= 0
+                    <el-switch v-model="form.support" 
+                      :active-value= 0
+                      :inactive-value= 1
                       active-color="#13ce66" inactive-color="#ff4949"></el-switch>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
                   <el-form-item label-width="60px" label="评论: " class="postInfo-container-item" prop="comment">
                     <el-radio-group v-model="form.comment">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="0">关闭</el-radio>
+                      <el-radio :label="0">开启</el-radio>
+                      <el-radio :label="1">关闭</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </el-col>

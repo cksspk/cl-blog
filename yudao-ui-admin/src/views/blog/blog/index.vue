@@ -58,7 +58,7 @@
       <el-table-column label="推荐" align="center" prop="support" >
         <template slot-scope="scope">
           <el-switch v-model="scope.row.support" 
-            :active-value="1" :inactive-value="0" 
+            :active-value="0" :inactive-value="1" 
             @change="handleSupportChange(scope.row)" 
             active-color="#13ce66"
             inactive-color="#ff4949"/>
@@ -220,7 +220,7 @@ export default {
     },
     /** 推荐状态修改 */
     handleSupportChange(row) {
-      let text = row.support ? "推荐" : "取消推荐";
+      let text = row.support  == 0  ? "推荐" : "取消推荐";
       this.$confirm('确认要' + text + '"' + row.title + '"博客吗?', "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -235,7 +235,7 @@ export default {
     },
     /** 评论状态修改 */
     handleCommentChange(row) {
-          let text = row.comment === 0 ? "开启评论" : "关闭评论";
+          let text = row.comment == 0 ? "开启评论" : "关闭评论";
           this.$confirm('确认要"' + text + '""' + row.title + '"博客吗?', "警告", {
             confirmButtonText: "确定",
             cancelButtonText: "取消",

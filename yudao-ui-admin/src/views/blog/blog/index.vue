@@ -44,7 +44,11 @@
     <el-table v-loading="loading" :data="list">
       <el-table-column label="编号" align="center" prop="id" />
       <el-table-column label="标题" align="center" prop="title" />
-      <el-table-column label="分类" align="center" prop="category.title" />
+      <el-table-column label="分类" align="center" prop="category.title">
+        <template slot-scope="scope">
+          <el-tag>{{ scope.row.category.title }}</el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="摘要" align="center" prop="summary" />
       <!-- <el-table-column label="封面" align="center" prop="headerImgType" /> -->
       <el-table-column label="评论" align="center" prop="comment">

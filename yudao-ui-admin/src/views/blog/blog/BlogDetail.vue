@@ -183,7 +183,6 @@ export default {
         this.fetchData(id);
     }else {
       var blogCache = MyLocalStorage.Cache.get("blogCache");
-      var fetch = true;
       if (blogCache != undefined && blogCache.content != undefined && blogCache.content.length != 0) {
         this.$confirm('检测到本地存在未发布博客,是否继续编辑', '提示', {
           confirmButtonText: '继续编辑',
@@ -191,7 +190,6 @@ export default {
           type: 'warning'
         }).then(() => {
           this.$modal.msgSuccess("已成功恢复!");
-          fetch = false;
           this.form = blogCache;
         }).catch(() => {
           this.$modal.msgSuccess("已删除!");
@@ -275,26 +273,18 @@ export default {
           let obj = JSON.parse(JSON.stringify(this.form));
           if (obj.id == undefined) {
             addBlog(obj).then(response => {
-              if (response.code === 200) {
-                this.msgSuccess("发布成功");
-                this.$store.dispatch('tagsView/delView', this.$route);
-                this.$router.push({path: '/blogManage/blog'})
-              } else {
-                this.msgError(response.msg);
-              }
+              this.$modal.msgSuccess("发布成功");
+              this.$store.dispatch('tagsView/delView', this.$route);
+              this.$router.push({path: '/blogManage/blog'})
               this.loading = false;
             }).catch(error => {
               this.loading = false;
             });
           } else {
             updateBlog(obj).then(response => {
-              if (response.code === 200) {
-                this.msgSuccess("发布成功");
-                this.$store.dispatch('tagsView/delView', this.$route);
-                this.$router.push({path: '/blogManage/blog'})
-              } else {
-                this.msgError(response.msg);
-              }
+              this.$modal.msgSuccess("发布成功");
+              this.$store.dispatch('tagsView/delView', this.$route);
+              this.$router.push({path: '/blogManage/blog'})
               this.loading = false;
             }).catch(error => {
               this.loading = false;
@@ -306,7 +296,7 @@ export default {
     draftBlog() {
       this.form.htmlContent = marked(this.form.content);
       if (this.form.content.length === 0 || this.form.title.length === 0) {
-        this.$message({
+        this.$modal.$message({
           message: '请填写必要的标题和内容',
           type: 'warning'
         });

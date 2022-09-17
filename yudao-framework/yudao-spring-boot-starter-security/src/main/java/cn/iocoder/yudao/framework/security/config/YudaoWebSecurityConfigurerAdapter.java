@@ -129,6 +129,7 @@ public class YudaoWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
                     .antMatchers(securityProperties.getPermitAllUrls().toArray(new String[0])).permitAll()
                     // 1.4 设置 App API 无需认证
                     .antMatchers(buildAppApi("/**")).permitAll()
+                    .antMatchers(buildPortal("/**")).permitAll()
                 // ②：每个项目的自定义规则
                 .and().authorizeRequests(registry -> // 下面，循环设置自定义规则
                         authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
@@ -143,6 +144,10 @@ public class YudaoWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
 
     private String buildAppApi(String url) {
         return webProperties.getAppApi().getPrefix() + url;
+    }
+
+    private String buildPortal(String url) {
+        return webProperties.getPortalApi().getPrefix() + url;
     }
 
     private Multimap<HttpMethod, String> getPermitAllUrlsFromAnnotations() {

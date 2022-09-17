@@ -1,10 +1,14 @@
 package cn.iocoder.yudao.module.blog.controller.admin.blog.vo;
 
-import lombok.*;
-import java.util.*;
-import io.swagger.annotations.*;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 import static cn.iocoder.yudao.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
@@ -35,7 +39,7 @@ public class BlogPageReqVO extends PageParam {
     @ApiModelProperty(value = " 正文内容 ")
     private String content;
 
-    @ApiModelProperty(value = " 文章状态,	    1表示已经发表,	    2表示草稿箱 ")
+    @ApiModelProperty(value = " 文章状态，1表示已经发表，2表示草稿箱")
     private Integer status;
 
     @ApiModelProperty(value = " 是否允许评论,	    1表示允许,	    0表示不允许 ")

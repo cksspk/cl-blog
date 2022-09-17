@@ -2,6 +2,8 @@ package cn.iocoder.yudao.module.blog.service.blog;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
+import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogRespVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
 
 import javax.validation.Valid;
@@ -102,4 +104,28 @@ public interface BlogService {
      * @return 博客
      */
     BlogRespVO getBlogWithTag(Long id);
+
+
+
+
+    //=============  portal
+    /**
+     * 获得博客分页
+     *
+     * @param pageReqVO 分页查询
+     * @return 博客分页
+     */
+    PageResult<BlogPageRespVO> getPortalBlogPage(PortalBlogPageReqVO pageReqVO);
+
+    /**
+     * 获得博客推荐
+     * @return
+     */
+    List<PortalBlogRespVO> getBlogSupport();
+
+    /**
+     * 获取博客热门
+     * @return
+     */
+    List<PortalBlogRespVO> getBlogHot();
 }

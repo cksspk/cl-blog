@@ -1,12 +1,17 @@
 package cn.iocoder.yudao.module.blog.service.category;
 
-import java.util.*;
-import javax.validation.*;
-
-import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
-import cn.iocoder.yudao.module.blog.controller.admin.category.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryCreateReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryExportReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryUpdateReqVO;
+import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
+
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 分类 Service 接口
@@ -87,4 +92,18 @@ public interface BlogCategoryService {
     default Map<Long, BlogCategoryDO> getCategoryMapByIds(List<Long> categoryIds) {
         return CollectionUtils.convertMap(getCategoryList(categoryIds), BlogCategoryDO::getId);
     }
+
+
+
+
+
+    // ===========================  portal
+
+    /**
+     * 获得分类列表
+     *
+     * @return 分类列表
+     */
+    List<BlogCategoryDO> getAllCategoryList();
+
 }

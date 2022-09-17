@@ -1,19 +1,22 @@
 package cn.iocoder.yudao.module.blog.service.category;
 
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryCreateReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryExportReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.category.vo.BlogCategoryUpdateReqVO;
+import cn.iocoder.yudao.module.blog.convert.category.BlogCategoryConvert;
+import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
+import cn.iocoder.yudao.module.blog.dal.mysql.category.BlogCategoryMapper;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.*;
-import cn.iocoder.yudao.module.blog.controller.admin.category.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-
-import cn.iocoder.yudao.module.blog.convert.category.BlogCategoryConvert;
-import cn.iocoder.yudao.module.blog.dal.mysql.category.BlogCategoryMapper;
+import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.CATEGORY_NOT_EXISTS;
 
 /**
  * 分类 Service 实现类
@@ -92,6 +95,16 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
 
     @Override
     public List<BlogCategoryDO> getCategorys() {
+        return blogCategoryMapper.selectList();
+    }
+
+
+
+    // ==========   portal
+    @Override
+    public List<BlogCategoryDO> getAllCategoryList() {
+
+        // TODO 改成从缓存中获取
         return blogCategoryMapper.selectList();
     }
 }

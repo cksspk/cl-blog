@@ -1,13 +1,5 @@
 import request from '@/axios'
 
-// 获取网站信息
-export function getSiteInfo(query) {
-    return request({
-        url: '/f/siteInfo',
-        method: 'get',
-        params: query
-    })
-}
 
 //获取所有分类
 export function listCategories() {

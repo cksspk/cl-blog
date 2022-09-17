@@ -96,10 +96,11 @@ yudao:
       - /admin-api/infra/file/*/get/** # 获取图片，和租户无关
       - /admin-api/system/sms/callback/* # 短信回调接口，无法带上租户编号
       - /app-api/pay/order/notify/* # 支付回调通知，不携带租户编号
+      - /f/** # 博客门户，不需要租户编号
 #      - /jmreport/list
       - /jmreport/*
     ignore-tables:
-      - system_tenant
+      - system_tenantTenantSecurityWebFilter
       - system_tenant_package
       - system_dict_data
       - system_dict_type

@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.blog.convert.blog;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
+import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogRespVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
@@ -34,6 +35,7 @@ public interface BlogConvert {
 
     List<BlogRespVO> convertList(List<BlogDO> list);
 
+
     List<BlogPageRespVO> convertList02(List<BlogDO> list);
 
     BlogPageRespVO.Category convert(BlogCategoryDO bean);
@@ -50,4 +52,8 @@ public interface BlogConvert {
         respVO.setTagTitleList(CollectionUtils.convertList(tagListByBlogId, TagDO::getTitle));
         return respVO;
     }
+
+
+    //====== portal
+    List<PortalBlogRespVO> convertPortalList(List<BlogDO> list);
 }

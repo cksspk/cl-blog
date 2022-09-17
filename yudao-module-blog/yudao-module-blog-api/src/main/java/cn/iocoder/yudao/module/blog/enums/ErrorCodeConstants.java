@@ -22,6 +22,9 @@ public interface ErrorCodeConstants {
     ErrorCode CATEGORY_NOT_EXISTS = new ErrorCode(1020001000, "分类不存在");
 
     // ========== 分类 1-030-001-000 ==========
-    ErrorCode BLOG_NOT_EXISTS = new ErrorCode(1030001000, "博客不存在");
+    ErrorCode BLOG_NOT_EXISTS = new ErrorCode(1020003000, "博客不存在");
+
+    // ========== 评论 1-040-001-000 ==========
+    ErrorCode COMMENT_NOT_EXISTS = new ErrorCode(1020004000, "评论不存在");
 
 }

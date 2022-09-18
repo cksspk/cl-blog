@@ -1,10 +1,15 @@
 package cn.iocoder.yudao.module.blog.service.tag;
 
-import java.util.*;
-import javax.validation.*;
-import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagCreateReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagExportReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagUpdateReqVO;
+import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
+
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 博客标签 Service 接口
@@ -89,4 +94,11 @@ public interface TagService {
      * @return 标签列表
      */
     List<TagDO> getTagListByBlogId(Long blogId);
+
+
+    //====== Portal 部分
+    /**
+     * @return 标签列表
+     */
+    List<TagDO> getPortalTagList();
 }

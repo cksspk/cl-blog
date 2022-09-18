@@ -4,24 +4,27 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagCreateReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagExportReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.TagUpdateReqVO;
+import cn.iocoder.yudao.module.blog.convert.tag.TagConvert;
+import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagMappingDO;
+import cn.iocoder.yudao.module.blog.dal.mysql.tag.TagMapper;
 import cn.iocoder.yudao.module.blog.dal.mysql.tag.TagMappingBatchInsetMapper;
 import cn.iocoder.yudao.module.blog.dal.mysql.tag.TagMappingMapper;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
+import javax.annotation.Resource;
 import java.util.*;
-import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
-import cn.iocoder.yudao.framework.common.pojo.PageResult;
-
-import cn.iocoder.yudao.module.blog.convert.tag.TagConvert;
-import cn.iocoder.yudao.module.blog.dal.mysql.tag.TagMapper;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.*;
+import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.TAG_DUPLICATE;
+import static cn.iocoder.yudao.module.blog.enums.ErrorCodeConstants.TAG_NOT_EXISTS;
 
 /**
  * 博客标签 Service 实现类
@@ -172,5 +175,21 @@ public class TagServiceImpl implements TagService {
         }
         Set<Long> tagIds = CollectionUtils.convertSet(tagMappingDOS, TagMappingDO::getTagId);
         return tagMapper.selectBatchIds(tagIds);
+    }
+
+
+
+
+    // ====== Portal 部分
+
+    /**
+     * TODO 需要添加到缓存
+     * @return
+     */
+    @Override
+    public List<TagDO> getPortalTagList() {
+        List<TagDO> tagDOList = tagMapper.selectList();
+
+        return tagDOList;
     }
 }

@@ -1,15 +1,14 @@
 package cn.iocoder.yudao.module.blog.convert.tag;
 
-import java.util.*;
-
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-
+import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.*;
+import cn.iocoder.yudao.module.blog.controller.portal.tag.vo.PortalTagRespVO;
+import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
-import cn.iocoder.yudao.module.blog.controller.admin.tag.vo.*;
-import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
+
+import java.util.List;
 
 /**
  * 博客标签 Convert
@@ -36,5 +35,7 @@ public interface TagConvert {
     @Mapping(source = "title", target = "name")
     List<TagSimpleRespVO> convertList03(List<TagDO> list);
 
+
+    List<PortalTagRespVO> convertPortalList(List<TagDO> list);
 
 }

@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
 import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogPageRespVO;
 import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogRespVO;
 import cn.iocoder.yudao.module.blog.convert.blog.BlogConvert;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
@@ -168,17 +169,20 @@ public class BlogServiceImpl implements BlogService {
 
 
     @Override
-    public PageResult<BlogPageRespVO> getPortalBlogPage(PortalBlogPageReqVO pageReqVO) {
-//        PageResult<BlogDO> pageResult = blogMapper.selectPortalPage(pageReqVO);
-        return null;
+    public PageResult<PortalBlogPageRespVO> getPortalBlogPage(PortalBlogPageReqVO pageReqVO) {
+        PageResult<BlogDO> pageResult = blogMapper.selectPortalPage(pageReqVO);
+
+        return  BlogConvert.INSTANCE.convertPortalPage(pageResult);
     }
 
+    //    TODO 加入缓存
     @Override
     public List<PortalBlogRespVO> getBlogSupport() {
         List<BlogDO> list = blogMapper.selectPortalSupportList();
         return  BlogConvert.INSTANCE.convertPortalList(list);
     }
 
+    //    TODO 加入缓存
     @Override
     public List<PortalBlogRespVO> getBlogHot() {
         List<BlogDO> list = blogMapper.selectPortalHotList();

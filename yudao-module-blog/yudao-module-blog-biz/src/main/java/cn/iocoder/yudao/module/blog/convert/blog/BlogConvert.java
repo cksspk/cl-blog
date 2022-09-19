@@ -3,6 +3,7 @@ package cn.iocoder.yudao.module.blog.convert.blog;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.blog.controller.admin.blog.vo.*;
+import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogPageRespVO;
 import cn.iocoder.yudao.module.blog.controller.portal.blog.vo.PortalBlogRespVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.blog.BlogDO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
@@ -56,4 +57,6 @@ public interface BlogConvert {
 
     //====== portal
     List<PortalBlogRespVO> convertPortalList(List<BlogDO> list);
+
+    PageResult<PortalBlogPageRespVO> convertPortalPage(PageResult<BlogDO> pageResult);
 }

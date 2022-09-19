@@ -1,11 +1,11 @@
 <template>
     <div class="home-content layout-content">
-        <div class="banner" style="margin-bottom:20px;" v-if="carouselList.length>0">
+        <!-- <div class="banner" style="margin-bottom:20px;" v-if="carouselList.length>0">
             <div class="bracket"></div>
             <div class="target">
                 <HomeBanner :carouselList="carouselList"></HomeBanner>
             </div>
-        </div>
+        </div> -->
         <Row>
             <Col :xs="24" :sm="24" :md="24" :lg="24" :xl="17">
                 <div class="layout-left">
@@ -17,15 +17,15 @@
                                   @menusControl="articlesMenusControl">
                     </SectionTitle>
                     <ArticleListCell v-for="article in articles" :article="article" :key="article.id"></ArticleListCell>
-                    <SectionTitle mainTitle="阅读" subTitle="Reading" :menus="booksTitleMenus" :to="'/articles'" v-if="books.length>0"
+                    <!-- <SectionTitle mainTitle="阅读" subTitle="Reading" :menus="booksTitleMenus" :to="'/articles'" v-if="books.length>0"
                                   :withRefresh="true"
                                   :withTimeSelect="false"
                                   @refresh="refreshBooks"
                                   @menusControl="booksMenusControl">
-                    </SectionTitle>
-                    <div class="books">
+                    </SectionTitle> -->
+                    <!-- <div class="books">
                         <BookCell :book="book" v-for="book in books" :key="book.id"></BookCell>
-                    </div>
+                    </div> -->
                 </div>
             </Col>
             <Col :xs="24" :sm="24" :md="24" :lg="24" :xl="7">
@@ -34,7 +34,7 @@
                     <Recommend style="margin-top:15px;"/>
                     <Hot style="margin-top:15px;"/>
                     <TagWall style="margin-top:15px;"/>
-                    <FriendLinks style="margin-top:15px;"/>
+                    <!-- <FriendLinks style="margin-top:15px;"/> -->
                 </div>
             </Col>
         </Row>
@@ -93,9 +93,11 @@
             }
         },
         beforeMount() {
-            listCarousel().then(response => {
-                this.carouselList = response.data;
-            });
+            // debugger
+            // listCarousel().then(response => {
+            //     this.carouselList = response.data;
+            // });
+            console.log("this.$store.state.home.articles", this.$store.state.home.articles);
             if (this.$store.state.home.articles.length === 0) {
                 this.getArticlesBaseInfo({
                     is_recommend: this.recommend,
@@ -105,15 +107,15 @@
                     pageNum: 1
                 });
             }
-            if (this.$store.state.home.books.length === 0) {
-                this.getBooksBaseInfo({
-                    is_recommend: this.recommend,
-                    is_hot: this.hot,
-                    ordering: this.mostComment,
-                    pageSize: 10,
-                    pageNum: 1
-                });
-            }
+            // if (this.$store.state.home.books.length === 0) {
+            //     this.getBooksBaseInfo({
+            //         is_recommend: this.recommend,
+            //         is_hot: this.hot,
+            //         ordering: this.mostComment,
+            //         pageSize: 10,
+            //         pageNum: 1
+            //     });
+            // }
         },
         mounted() {
             // 更新首页meta信息

@@ -21,7 +21,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Api(tags = "门户 - 分类")
 @RestController
-@RequestMapping("/f/category")
+@RequestMapping("/category")
 @Validated
 @Slf4j
 public class PortalCategoryController {

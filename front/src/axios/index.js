@@ -5,7 +5,7 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8';
 // 创建axios实例
 const service = axios.create({
     // axios中请求配置有baseURL选项，表示请求URL公共部分
-    baseURL: process.env.VUE_APP_BASE_API,
+    baseURL: process.env.VUE_APP_BASE_API + '/f/',  // 此处的 /f/ 地址，原因是后端的基础路径为 /f/
     // 超时
     timeout: 120000
 });
@@ -23,7 +23,8 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(response => {
         const code = response.data.code;
-        if (code < 200 || code > 300) {
+        console.log("code",code);
+        if (code === 500) {
             Notice.error({
                 title: response.data.msg
             });

@@ -14,28 +14,28 @@
         name: 'index',
 
         created() {
-            listNotice().then(response => {
-                let list = response.data;
-                for (let i = 0; i < list.length; i++) {
-                    let obj = list[i];
-                    //通知
-                    if (obj.type === "1") {
-                        this.$Notice.info({
-                            title: obj.title,
-                            desc: obj.htmlContent
-                        });
-                    } else {
-                        //公告
-                        this.$Modal.info({
-                            title: obj.title,
-                            content: obj.htmlContent,
-                            okText:'我知道了',
-                            closeOnClickModal:true,
-                            scrollable:true,
-                        })
-                    }
-                }
-            });
+            // listNotice().then(response => {
+            //     let list = response.data;
+            //     for (let i = 0; i < list.length; i++) {
+            //         let obj = list[i];
+            //         //通知
+            //         if (obj.type === "1") {
+            //             this.$Notice.info({
+            //                 title: obj.title,
+            //                 desc: obj.htmlContent
+            //             });
+            //         } else {
+            //             //公告
+            //             this.$Modal.info({
+            //                 title: obj.title,
+            //                 content: obj.htmlContent,
+            //                 okText:'我知道了',
+            //                 closeOnClickModal:true,
+            //                 scrollable:true,
+            //             })
+            //         }
+            //     }
+            // });
         },
         //创建前设置
         beforeCreate () {

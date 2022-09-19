@@ -1,4 +1,7 @@
-import {listRecommend, listHot, listSupportFriendLink, listTag} from '@/api'
+import {listSupportFriendLink} from '@/api'
+// update
+import {listTag} from '@/api/tag'
+import {listRecommend, listHot} from '@/api/blog'
 
 export default {
   namespaced: true,

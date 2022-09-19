@@ -76,13 +76,13 @@ export function listTag() {
 }
 
 // 查询博客列表
-export function listBlogBaseInfo(query) {
-    return request({
-        url: '/f/blog',
-        method: 'get',
-        params: query
-    })
-}
+// export function listBlogBaseInfo(query) {
+//     return request({
+//         url: '/f/blog',
+//         method: 'get',
+//         params: query
+//     })
+// }
 
 export function listBlogInfo(query) {
     return request({

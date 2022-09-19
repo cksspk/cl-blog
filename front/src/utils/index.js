@@ -9,8 +9,9 @@ import {mapState} from "vuex";
  * @returns {string}
  */
 export function socialDateFormat(formatDate) {
-    formatDate=formatDate.replace(/\-/g, "/");
-    let timestamp = Date.parse(new Date(formatDate));
+    // formatDate=formatDate.replace(/\-/g, "/");
+    // let timestamp = Date.parse(new Date(formatDate));
+    let timestamp = formatDate
     // 获取时间戳
     let time = new Date().getTime();
     // 去掉时间戳后三位，保持一致

@@ -17,7 +17,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Api(tags = "门户 - 博客标签")
 @RestController
-@RequestMapping("/f/tag")
+@RequestMapping("/tag")
 @Validated
 public class PortalTagController {
 

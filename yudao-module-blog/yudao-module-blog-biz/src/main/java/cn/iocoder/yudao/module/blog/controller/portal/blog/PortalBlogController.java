@@ -23,7 +23,7 @@ import static cn.iocoder.yudao.framework.common.pojo.CommonResult.success;
 
 @Api(tags = "门户 - 博客")
 @RestController
-@RequestMapping("/f/blog")
+@RequestMapping("/blog")
 @Validated
 @Slf4j
 public class PortalBlogController {

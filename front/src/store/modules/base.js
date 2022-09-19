@@ -1,5 +1,7 @@
 import {saveToLocal} from '@/utils';
-import {listCategories, listMenus} from '@/api'
+import {listMenus} from '@/api'
+
+import {listCategories} from '@/api/category'
 
 export default {
   namespaced: true,

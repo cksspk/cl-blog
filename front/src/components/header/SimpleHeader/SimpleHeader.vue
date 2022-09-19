@@ -72,7 +72,7 @@
         },
         mounted() {
             if (!this.$store.state.base.categories) this.getCategories();
-            if (!this.$store.state.base.menus) this.getMenus();
+            // if (!this.$store.state.base.menus) this.getMenus();
             // 获取皮肤信息
             this.checkTheme();
         },

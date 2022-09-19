@@ -1,4 +1,6 @@
-import {listBlogBaseInfo, listNoteBaseInfo, listBookBaseInfo} from '@/api'
+import {listNoteBaseInfo, listBookBaseInfo} from '@/api'
+
+import {listBlogBaseInfo} from '@/api/blog'
 
 export default {
     namespaced: true,
@@ -21,9 +23,10 @@ export default {
     actions: {
         // 获取文章基本信息
         GET_ARTICLES_BASE_INFO({state, commit}, params) {
+            // debugger
             return new Promise((resolve, reject) => {
                 listBlogBaseInfo(params).then((response) => {
-                    commit('UPDATE_ARTICLES_BASE_INFO', response.rows);
+                    commit('UPDATE_ARTICLES_BASE_INFO', response.data.list);
                     resolve(response);
                 }).catch((error) => {
                     reject(error);
@@ -31,26 +34,26 @@ export default {
             });
         },
         // 获取图书基本信息
-        GET_BOOKS_BASE_INFO({state, commit}, params) {
-            return new Promise((resolve, reject) => {
-                listBookBaseInfo(params).then((response) => {
-                    commit('UPDATE_BOOKS_BASE_INFO', response.rows);
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                });
-            });
-        },
+        // GET_BOOKS_BASE_INFO({state, commit}, params) {
+        //     return new Promise((resolve, reject) => {
+        //         listBookBaseInfo(params).then((response) => {
+        //             commit('UPDATE_BOOKS_BASE_INFO', response.rows);
+        //             resolve(response);
+        //         }).catch((error) => {
+        //             reject(error);
+        //         });
+        //     });
+        // },
         // 获取图书笔记基本信息
-        GET_NOTES_BASE_INFO({state, commit}, params) {
-            return new Promise((resolve, reject) => {
-                listNoteBaseInfo(params).then((response) => {
-                    commit('UPDATE_NOTES_BASE_INFO', response.data.results);
-                    resolve(response);
-                }).catch((error) => {
-                    reject(error);
-                });
-            });
-        },
+        // GET_NOTES_BASE_INFO({state, commit}, params) {
+        //     return new Promise((resolve, reject) => {
+        //         listNoteBaseInfo(params).then((response) => {
+        //             commit('UPDATE_NOTES_BASE_INFO', response.data.results);
+        //             resolve(response);
+        //         }).catch((error) => {
+        //             reject(error);
+        //         });
+        //     });
+        // },
     }
 }

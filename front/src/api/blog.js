@@ -2,7 +2,7 @@ import request from '@/axios'
 
 
 // 查询博客列表
-export function listBlogBaseInfo(query) {
+export function blogPage(query) {
     return request({
         url: '/blog/page',
         method: 'get',

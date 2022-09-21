@@ -1,6 +1,6 @@
 import {listNoteBaseInfo, listBookBaseInfo} from '@/api'
 
-import {listBlogBaseInfo} from '@/api/blog'
+import {blogPage} from '@/api/blog'
 
 export default {
     namespaced: true,
@@ -25,7 +25,7 @@ export default {
         GET_ARTICLES_BASE_INFO({state, commit}, params) {
             // debugger
             return new Promise((resolve, reject) => {
-                listBlogBaseInfo(params).then((response) => {
+                blogPage(params).then((response) => {
                     commit('UPDATE_ARTICLES_BASE_INFO', response.data.list);
                     resolve(response);
                 }).catch((error) => {

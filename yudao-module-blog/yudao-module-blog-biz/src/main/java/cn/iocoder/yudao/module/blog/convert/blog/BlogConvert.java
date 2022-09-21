@@ -59,4 +59,6 @@ public interface BlogConvert {
     List<PortalBlogRespVO> convertPortalList(List<BlogDO> list);
 
     PageResult<PortalBlogPageRespVO> convertPortalPage(PageResult<BlogDO> pageResult);
+
+    PortalBlogRespVO convertPortal(BlogDO blogDO, Long commentCount);
 }

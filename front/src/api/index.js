@@ -92,13 +92,13 @@ export function listBlogInfo(query) {
     })
 }
 
-// 查询博客列表
-export function BlogDetail(id) {
-    return request({
-        url: '/f/blog/' + id,
-        method: 'get',
-    })
-}
+// // 查询博客列表
+// export function BlogDetail(id) {
+//     return request({
+//         url: '/f/blog/' + id,
+//         method: 'get',
+//     })
+// }
 
 //点赞博客
 export function LikeBlog(id) {

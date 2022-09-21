@@ -63,5 +63,11 @@ public interface CommentService {
      */
     PageResult<CommentDO> getCommentPage(CommentPageReqVO pageReqVO);
 
-  
+
+    /**
+     * 获取博客评论的数量
+     * @param blogId
+     * @return
+     */
+    Long getCommentCountByBlogId(Long blogId);
 }

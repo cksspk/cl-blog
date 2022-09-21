@@ -12,6 +12,7 @@ import cn.iocoder.yudao.module.blog.dal.dataobject.category.BlogCategoryDO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.tag.TagDO;
 import cn.iocoder.yudao.module.blog.dal.mysql.blog.BlogMapper;
 import cn.iocoder.yudao.module.blog.service.category.BlogCategoryService;
+import cn.iocoder.yudao.module.blog.service.comment.CommentService;
 import cn.iocoder.yudao.module.blog.service.tag.TagService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,10 @@ public class BlogServiceImpl implements BlogService {
 
     @Resource
     private TagService tagService;
+
+
+    @Resource
+    private CommentService commentService;
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
@@ -187,5 +192,19 @@ public class BlogServiceImpl implements BlogService {
     public List<PortalBlogRespVO> getBlogHot() {
         List<BlogDO> list = blogMapper.selectPortalHotList();
         return  BlogConvert.INSTANCE.convertPortalList(list);
+    }
+
+    @Override
+    public PortalBlogRespVO getPortalBlog(Long id) {
+        BlogDO blogDO = blogMapper.selectById(id);
+        // 获取博客评论数量
+        Long commentCount = commentService.getCommentCountByBlogId(blogDO.getId());
+
+
+        // 增加博客点击 TODO 1. 应该判断 重复浏览（同一个人判断？）问题  2. 改为异步消费
+        BlogDO updateDO = new BlogDO().setId(blogDO.getId()).setClick(blogDO.getClick() + 1);
+        blogMapper.updateById(updateDO);
+
+        return  BlogConvert.INSTANCE.convertPortal(blogDO, commentCount);
     }
 }

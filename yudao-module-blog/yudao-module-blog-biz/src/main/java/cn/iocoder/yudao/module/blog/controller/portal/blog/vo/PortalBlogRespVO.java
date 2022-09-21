@@ -30,5 +30,8 @@ public class PortalBlogRespVO extends PortalBlogBaseVO {
     private Date createTime;
 
 
+    @ApiModelProperty(value = "评论数量")
+    private Long commentCount;
+
 
 }

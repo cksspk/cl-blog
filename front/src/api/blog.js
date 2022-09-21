@@ -27,3 +27,11 @@ export function listHot(query) {
         params: query
     })
 }
+
+// 查询博客详情
+export function BlogDetail(id) {
+    return request({
+        url: '/blog/get/' + id,
+        method: 'get',
+    })
+}

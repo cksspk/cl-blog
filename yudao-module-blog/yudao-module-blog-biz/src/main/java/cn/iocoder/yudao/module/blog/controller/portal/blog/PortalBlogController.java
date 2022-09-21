@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,6 +51,13 @@ public class PortalBlogController {
     public CommonResult<List<PortalBlogRespVO>> getBlogHot() {
         List<PortalBlogRespVO> blogSupport = blogService.getBlogHot();
         return success(blogSupport);
+    }
+
+
+    @GetMapping("/get/{id}")
+    @ApiOperation("获得博客")
+    public CommonResult<PortalBlogRespVO> getBlog(@PathVariable("id") Long id) {
+        return success(blogService.getPortalBlog(id));
     }
 
 

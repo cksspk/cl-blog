@@ -32,8 +32,6 @@ export default {
     // 获取列表详细信息
     GET_ARTICLES_BASE_INFO({state, commit}, {params, reset}) {
       return new Promise((resolve, reject) => {
-        console.log("params", params);
-        debugger
         listBlogBaseInfo(params).then((response) => {
           // 更新文章
           if (reset) {

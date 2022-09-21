@@ -78,5 +78,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
 
-
+    @Override
+    public Long getCommentCountByBlogId(Long blogId) {
+        Long count = commentMapper.selectCountByBlogId(blogId);
+        return count;
+    }
 }

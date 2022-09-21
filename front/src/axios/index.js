@@ -23,7 +23,6 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(response => {
         const code = response.data.code;
-        console.log("code",code);
         if (code === 500) {
             Notice.error({
                 title: response.data.msg

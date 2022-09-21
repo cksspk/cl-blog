@@ -25,7 +25,7 @@
                   </span>
                     <span class="comments">
                       <a @click="scrollToComments('#comments')">
-                        <Icon type="ios-create"></Icon> {{article.commentList.length}} 评论
+                        <Icon type="ios-create"></Icon> {{article.commentCount}} 评论
                       </a>
                    </span>
                     <span class="likes">

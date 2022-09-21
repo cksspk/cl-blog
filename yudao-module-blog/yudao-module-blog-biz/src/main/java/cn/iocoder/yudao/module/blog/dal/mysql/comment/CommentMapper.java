@@ -8,6 +8,8 @@ import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * 评论 Mapper
  *
@@ -43,4 +45,11 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
 
 
 
+    default List<CommentDO> selectByBlogId(Long blogId) {
+        return selectList(CommentDO::getBlogId, blogId);
+    }
+
+    default Long selectCountByBlogId(Long blogId) {
+        return selectCount(CommentDO::getBlogId, blogId);
+    }
 }

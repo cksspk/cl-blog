@@ -1,4 +1,5 @@
-import {BlogDetail} from "@/api"
+// import {BlogDetail} from "@/api"
+import {BlogDetail} from "@/api/blog"
 export default {
     namespaced: true,
     state: {

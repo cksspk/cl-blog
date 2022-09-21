@@ -129,4 +129,12 @@ public interface BlogService {
      * @return
      */
     List<PortalBlogRespVO> getBlogHot();
+
+
+    /**
+     * 获取博客详情
+     * @param id
+     * @return
+     */
+    PortalBlogRespVO getPortalBlog(Long id);
 }

@@ -14,12 +14,12 @@ export const MaxLimitSize = 100;
 
 // section title默认的menus
 export const SectionTitleDefaultMenus = [
-    {
-        title: '顺序',
-        selectedTitle: '倒序',
-        selected: true,
-        method: 'timeSorted'
-    },
+    // {
+    //     title: '顺序',
+    //     selectedTitle: '倒序',
+    //     selected: true,
+    //     method: 'timeSorted'
+    // },
     {title: '最多评论', selected: false, method: 'mostComment'},
     {title: '推荐', selected: false, method: 'recommend'}
 ];

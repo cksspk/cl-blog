@@ -7,7 +7,7 @@
                     <h4 class="title">
                         <a @click.prevent="gotoPostDetail(article)">
                             {{article.title}}</a>
-                        <span class="special" v-if="article.support">推荐</span>
+                        <span class="special" v-if="article.support === 0">推荐</span>
                     </h4>
                     <div class="tags">
                         <Tag :key="tag.id" class="border-tag" type="border" :color="tag.color"

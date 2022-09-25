@@ -1,9 +1,11 @@
 package cn.iocoder.yudao.module.blog.service.comment;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
 import cn.iocoder.yudao.module.blog.convert.comment.CommentConvert;
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 import cn.iocoder.yudao.module.blog.dal.mysql.comment.CommentMapper;
@@ -82,5 +84,25 @@ public class CommentServiceImpl implements CommentService {
     public Long getCommentCountByBlogId(Long blogId) {
         Long count = commentMapper.selectCountByBlogId(blogId);
         return count;
+    }
+
+
+
+
+    @Override
+    public PageResult<CommentDO> getCommentPageByBlogId(PortalCommentPageReqVO reqVO) {
+        // 第一次查询博客评论
+        PageResult<CommentDO> pageResult = commentMapper.selectPortalPage(reqVO, null);
+        // 第二次根据评论查询子评论
+        if (CollUtil.isEmpty(pageResult.getList())) {
+            return new PageResult<>(pageResult.getTotal());
+        }
+
+        List<CommentDO> list = pageResult.getList();
+        list.forEach(rootCommentDO -> {
+            commentMapper.selectChildComments(rootCommentDO.getBlogId(), rootCommentDO.getId());
+        });
+
+        return null;
     }
 }

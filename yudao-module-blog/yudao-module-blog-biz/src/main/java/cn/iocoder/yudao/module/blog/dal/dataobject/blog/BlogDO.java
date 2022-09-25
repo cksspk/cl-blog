@@ -79,4 +79,6 @@ public class BlogDO extends BaseDO {
      */
     private Long click;
 
+    // TODO 评论数
+
 }

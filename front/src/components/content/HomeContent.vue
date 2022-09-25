@@ -138,10 +138,10 @@
                         this.mostComment = params[1] ? 'commentCount' : undefined;
                         break;
                     case 'hot':
-                        this.hot = params[1] ? 'click' : undefined;
+                        this.hot = params[1] ? true : undefined;
                         break;
                     case 'recommend':
-                        this.recommend = params[1] ? true : undefined;
+                        this.recommend = params[1] ? 0 : undefined;
                         break;
                 }
                 // 排序条件
@@ -152,13 +152,18 @@
                 if (this.hot !== undefined) {
                     orderings.push(this.hot);
                 }
-                this.getArticlesBaseInfo({
-                    support: this.recommend,
-                    orderByColumn: orderings.toString(),
-                    isAsc: this.timeSorted ? 'asc' : 'desc',
+
+                console.log();
+                let param = {
+                    support: this.recommend ,
+                    clickDesc:  this.hot,
+                    // orderByColumn: orderings.toString(),
+                    // isAsc: this.timeSorted ? 'asc' : 'desc',
                     pageNum: 1,
                     pageSize: 10
-                });
+                }
+
+                this.getArticlesBaseInfo(param);
             },
             refreshBooks() {
                 this.mostCommentBooks = undefined;

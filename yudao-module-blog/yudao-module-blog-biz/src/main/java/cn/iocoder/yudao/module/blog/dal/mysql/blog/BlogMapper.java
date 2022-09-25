@@ -1,5 +1,6 @@
 package cn.iocoder.yudao.module.blog.dal.mysql.blog;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.yudao.framework.common.enums.CommonStatusEnum;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
@@ -47,11 +48,16 @@ public interface BlogMapper extends BaseMapperX<BlogDO> {
     default PageResult<BlogDO> selectPortalPage(PortalBlogPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<BlogDO>()
                 .eq(BlogDO::getStatus, StatusEnums.PUBLISH.getStatus())      // 基本条件：发布状态
-                .eqIfPresent(BlogDO::getSupport, CommonStatusEnum.ENABLE.getStatus()) // 推荐
+                .eqIfPresent(BlogDO::getCategoryId, reqVO.getCategoryId())   // 分类编号
 
-                .orderByDesc(BlogDO::getId)
-                , reqVO.getSortingFields());
+                .betweenIfPresent(BlogDO::getCreateTime, reqVO.getBeginTime(), reqVO.getEndTime())  // 时间范围
+
+                .eqIfPresent(BlogDO::getSupport, reqVO.getSupport()) // 推荐
+                .orderByDesc((ObjectUtil.isNotNull(reqVO.getClickDesc()) && reqVO.getClickDesc()), BlogDO::getClick)
+                .orderByDesc(BlogDO::getId));
     }
+
+
     default List<BlogDO> selectPortalSupportList() {
         return selectList(new LambdaQueryWrapperX<BlogDO>()
                 .eq(BlogDO::getStatus, StatusEnums.PUBLISH.getStatus())      // 基本条件：发布状态

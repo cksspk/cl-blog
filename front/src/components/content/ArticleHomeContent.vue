@@ -124,11 +124,15 @@
                     orderByColumn: orderings.toString(),
                     isAsc: this.timeSorted ? 'asc' : 'desc',
                     support: this.recommend,
+                    clickDesc:  this.hot,
                     pageNum: this.pageNum,
                     pageSize: this.pageSize,
                     beginTime: this.dateRange[0],
                     endTime: this.dateRange[1]
+
                 };
+                console.log("文章列表：params", params);
+
                 this.getArticlesBaseInfo({params, reset}).then(response => {
                     this.$refs.browseMore.stopLoading();
                 }).catch(error => {
@@ -163,7 +167,7 @@
                         this.mostComment = params[1] ? true : undefined;
                         break;
                     case 'recommend':
-                        this.recommend = params[1] ? true : undefined;
+                        this.recommend = params[1] ? 0 : undefined;
                         break;
                 }
                 // 清空原数据

@@ -5,6 +5,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -45,11 +46,24 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
 
 
 
-    default List<CommentDO> selectByBlogId(Long blogId) {
+    default List<CommentDO> selectListByBlogId(Long blogId) {
         return selectList(CommentDO::getBlogId, blogId);
     }
 
     default Long selectCountByBlogId(Long blogId) {
         return selectCount(CommentDO::getBlogId, blogId);
     }
+
+    // ====== Portal
+
+    default PageResult<CommentDO> selectPortalPage(PortalCommentPageReqVO reqVO, Long pId) {
+        return selectPage(reqVO, new LambdaQueryWrapperX<CommentDO>()
+                .eq(CommentDO::getBlogId, reqVO.getBlogId())
+                .eqIfPresent(CommentDO::getParentId, pId)
+                // 按点赞排序 TODO 后期优化排序
+                .orderByDesc(CommentDO::getGood));
+    }
+
+    // TODO 采用连表查询子评论
+    void selectChildComments(Long blogId, Long id);
 }

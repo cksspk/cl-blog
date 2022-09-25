@@ -4,6 +4,7 @@ import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 
 import javax.validation.Valid;
@@ -70,4 +71,12 @@ public interface CommentService {
      * @return
      */
     Long getCommentCountByBlogId(Long blogId);
+
+
+    /**
+     * 根据博客编号查询评论列表
+     * @param reqVO 查询条件
+     * @return 评论分页
+     */
+    PageResult<CommentDO> getCommentPageByBlogId(PortalCommentPageReqVO reqVO);
 }

@@ -2,11 +2,11 @@ import request from '@/axios'
 
 
 // 查询博客列表
-export function blogPage(query) {
+export function blogPage(params) {
     return request({
         url: '/blog/page',
         method: 'get',
-        params: query
+        params: params
     })
 }
 

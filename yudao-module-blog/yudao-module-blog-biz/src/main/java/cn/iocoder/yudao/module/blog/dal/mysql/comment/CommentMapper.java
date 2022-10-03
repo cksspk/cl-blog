@@ -55,7 +55,7 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
     }
 
     // ====== Portal
-
+    // TODO 采用连表查询子评论
     default PageResult<CommentDO> selectPortalPage(PortalCommentPageReqVO reqVO, Long pId) {
         return selectPage(reqVO, new LambdaQueryWrapperX<CommentDO>()
                 .eq(CommentDO::getBlogId, reqVO.getBlogId())
@@ -64,6 +64,6 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
                 .orderByDesc(CommentDO::getGood));
     }
 
-    // TODO 采用连表查询子评论
+
     void selectChildComments(Long blogId, Long id);
 }

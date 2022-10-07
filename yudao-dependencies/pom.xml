@@ -57,6 +57,7 @@
         <commons-net.version>3.8.0</commons-net.version>
         <jsch.version>0.1.55</jsch.version>
         <tika-core.version>2.4.1</tika-core.version>
+        <ip2region.version>2.6.5</ip2region.version>
         <!-- 三方云服务相关 -->
         <minio.version>8.2.2</minio.version>
         <aliyun-java-sdk-core.version>4.5.25</aliyun-java-sdk-core.version>
@@ -508,6 +509,13 @@
                 <version>${jsch.version}</version>
             </dependency>
 
+            <!--ip地理地址-->
+            <dependency>
+                <groupId>org.lionsoul</groupId>
+                <artifactId>ip2region</artifactId>
+                <version>${ip2region.version}</version>
+            </dependency>
+
             <!-- 三方云服务相关 -->
             <dependency>
                 <groupId>cn.iocoder.boot</groupId>
@@ -565,6 +573,7 @@
                 <artifactId>jimureport-spring-boot-starter</artifactId>
                 <version>${jimureport.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

@@ -72,7 +72,7 @@ public class CommentDO extends BaseDO {
      */
     private String url;
     /**
-     * 1表示显示,0表示不显示
+     * 0表示显示,1表示不显示
      */
     private Integer display;
     /**

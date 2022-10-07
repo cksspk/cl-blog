@@ -2,7 +2,6 @@ package cn.iocoder.yudao.module.blog.controller.admin.comment;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentRespVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
@@ -32,12 +31,6 @@ public class CommentController {
     @Resource
     private CommentService commentService;
 
-    @PostMapping("/create")
-    @ApiOperation("创建评论")
-    @PreAuthorize("@ss.hasPermission('${permissionPrefix}:create')")
-    public CommonResult<Long> createComment(@Valid @RequestBody CommentCreateReqVO createReqVO) {
-        return success(commentService.createComment(createReqVO));
-    }
 
     @PutMapping("/update")
     @ApiOperation("更新评论")

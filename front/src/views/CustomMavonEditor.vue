@@ -75,6 +75,8 @@
     import 'mavon-editor/dist/css/index.css';
 
     import {getInfoByQQ, insertComment} from '@/api'
+    import {addComment} from '@/api/comment'
+
     import marked from "marked";
 
     export default {
@@ -116,7 +118,7 @@
                     qqNum: '',
                     email: '',
                     avatar: '',
-                    reply: true
+                    reply: 0
                 },
                 rules: {
                     nickName: [
@@ -309,15 +311,15 @@
                 this.form.pageId = this.pageId;
                 this.form.url = this.url;
                 let obj = JSON.parse(JSON.stringify(this.form));
-                insertComment(obj).then((response) => {
-                    if (response.code == 200) {
+                addComment(obj).then((response) => {
+                    // if (response.code == 200) {
                         // 清空评论框内容
                         this.form = {};
                         this.$Message.success("评论成功");
                         this.$emit('reloadCommentList');
-                    } else {
-                        this.msgError("评论失败,请重新再试!");
-                    }
+                    // } else {
+                    //     this.msgError("评论失败,请重新再试!");
+                    // }
                     // 关闭loading状态
                     this.publishing = false;
                 }).catch((error) => {

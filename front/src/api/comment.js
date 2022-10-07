@@ -10,3 +10,12 @@ export function commentPage(params) {
     })
 }
 
+//新增评论
+export function addComment(comment) {
+    return request({
+        url: '/comment/create',
+        method: 'post',
+        data: comment
+    })
+}
+

@@ -1,8 +1,12 @@
 package cn.iocoder.yudao.module.blog.service.comment;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
@@ -40,6 +44,16 @@ public class CommentServiceImpl implements CommentService {
     public Long createComment(CommentCreateReqVO createReqVO) {
         // 插入
         CommentDO comment = CommentConvert.INSTANCE.convert(createReqVO);
+        // 获取 userAgent , TODO 直接存储 userAgent
+        UserAgent userAgent = UserAgentUtil.parse(ServletUtils.getUserAgent());
+        comment.setBrowser(userAgent.getBrowser().getName());
+        comment.setOs(userAgent.getOs().getName());
+
+        // 设置位置
+        comment.setIp(ServletUtils.getClientIP());
+        comment.setLocation(ServletUtil.get)
+
+
         commentMapper.insert(comment);
         // 返回
         return comment.getId();

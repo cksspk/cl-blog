@@ -1,19 +1,23 @@
 package cn.iocoder.yudao.module.blog.service.comment;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentRespVO;
 import cn.iocoder.yudao.module.blog.convert.comment.CommentConvert;
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 import cn.iocoder.yudao.module.blog.dal.mysql.comment.CommentMapper;
+import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import static cn.iocoder.yudao.framework.common.exception.util.ServiceExceptionUtil.exception;
@@ -90,19 +94,23 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public PageResult<CommentDO> getCommentPageByBlogId(PortalCommentPageReqVO reqVO) {
+    public PageResult<PortalCommentRespVO> getCommentPageByBlogId(PortalCommentPageReqVO reqVO) {
         // 第一次查询博客评论
         PageResult<CommentDO> pageResult = commentMapper.selectPortalPage(reqVO, null);
-        // 第二次根据评论查询子评论
+
         if (CollUtil.isEmpty(pageResult.getList())) {
             return new PageResult<>(pageResult.getTotal());
         }
 
+        // 根据评论查询子评论
+        HashMap<Long, PageResult<CommentDO>> subCommentMap = Maps.newHashMap();
         List<CommentDO> list = pageResult.getList();
         list.forEach(rootCommentDO -> {
-            commentMapper.selectChildComments(rootCommentDO.getBlogId(), rootCommentDO.getId());
+            PageParam pageParam = new PageParam().setPageNo(1).setPageSize(2);
+            PageResult<CommentDO> commentDOPageResult = commentMapper.selectChildComments(pageParam, rootCommentDO.getBlogId(), rootCommentDO.getId());
+            subCommentMap.put(rootCommentDO.getId(), commentDOPageResult);
         });
 
-        return null;
+        return CommentConvert.INSTANCE.convertPortalPage(pageResult, subCommentMap);
     }
 }

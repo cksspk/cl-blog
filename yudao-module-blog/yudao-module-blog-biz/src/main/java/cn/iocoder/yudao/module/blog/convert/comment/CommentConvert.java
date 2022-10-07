@@ -1,6 +1,8 @@
 package cn.iocoder.yudao.module.blog.convert.comment;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
+import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentRespVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
@@ -9,6 +11,7 @@ import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,7 +39,23 @@ public interface CommentConvert {
 
 
     // ======= Portal
-    PageResult<PortalCommentRespVO> convertPortalPage(PageResult<CommentDO> list);
+    PortalCommentRespVO convertPortal(CommentDO bean);
+    List<PortalCommentRespVO> convertPortalList(List<CommentDO>  list);
+    default PageResult<PortalCommentRespVO> convertPortalPage(PageResult<CommentDO> page, HashMap<Long, PageResult<CommentDO>> subCommentMap) {
 
+        List<PortalCommentRespVO> commentDOS = CollectionUtils.convertList(page.getList(), comment -> {
+            PortalCommentRespVO respVO = convertPortal(comment);
+
+            PageResult<CommentDO> subComment = subCommentMap.get(comment.getId());
+            if (CollUtil.isNotEmpty(subComment.getList())) {
+                respVO.setSubTotal(subComment.getTotal());
+                List<CommentDO> list = subComment.getList();
+                respVO.setSubComment(convertPortalList(list));
+            }
+            return respVO;
+        });
+
+        return new PageResult<>(commentDOS, page.getTotal());
+    }
 
 }

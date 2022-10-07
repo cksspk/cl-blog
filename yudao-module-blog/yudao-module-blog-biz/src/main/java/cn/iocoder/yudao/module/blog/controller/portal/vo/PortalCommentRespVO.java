@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @ApiModel("管理后台 - 评论 Response VO")
 @Data
@@ -30,5 +31,10 @@ public class PortalCommentRespVO {
 
     @ApiModelProperty(value = "html内容")
     private String htmlContent;
+
+    @ApiModelProperty(value = "子评论数量")
+    private Long subTotal;
+
+    private List<PortalCommentRespVO> subComment;
 
 }

@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.blog.dal.mysql.comment;
 
 
+import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.mybatis.core.mapper.BaseMapperX;
 import cn.iocoder.yudao.framework.mybatis.core.query.LambdaQueryWrapperX;
@@ -55,7 +56,6 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
     }
 
     // ====== Portal
-    // TODO 采用连表查询子评论
     default PageResult<CommentDO> selectPortalPage(PortalCommentPageReqVO reqVO, Long pId) {
         return selectPage(reqVO, new LambdaQueryWrapperX<CommentDO>()
                 .eq(CommentDO::getBlogId, reqVO.getBlogId())
@@ -65,5 +65,18 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
     }
 
 
-    void selectChildComments(Long blogId, Long id);
+    /**
+     * 子评论查询，按点赞逆序
+     * @param pageParam 只查询两条
+     * @param blogId 博客编号
+     * @param pId 父评论编号
+     * @return 评论分页
+     */
+    default PageResult<CommentDO> selectChildComments(PageParam pageParam, Long blogId, Long pId) {
+        return selectPage(pageParam, new LambdaQueryWrapperX<CommentDO>()
+                .eq(CommentDO::getBlogId, blogId)
+                .eq(CommentDO::getParentId, pId)
+                // 按点赞排序
+                .orderByDesc(CommentDO::getGood));
+    }
 }

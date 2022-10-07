@@ -1,9 +1,9 @@
 <template>
   <div class="article-page-footer" v-if="article != undefined">
-    <LicenseTag :license="article.license"/>
+    <!-- <LicenseTag :license="article.license"/> -->
     <SocialSection :pageId="article.id"
                    :commentList="article.commentList"
-                   :allowComment="article.comment"/>
+                   :allowComment="article.comment === 0"/>
   </div>
 </template>
 

@@ -36,7 +36,8 @@
 
     import CustomMavonEditor from '../CustomMavonEditor';
     import CommentListCell from './CommentListCell';
-    import {listComment} from '@/api'
+    // import {listComment} from '@/api'
+    import { commentPage } from '@/api/comment'
 
     const COMMENT_DEFAULT_LIMIT = 10;
     export default {
@@ -46,10 +47,10 @@
                 Type: Number,
                 default: undefined
             },
-            commentList: {
-                type: Array,
-                default: undefined
-            },
+            // commentList: {
+            //     type: Array,
+            //     default: undefined
+            // },
             allowComment: {
                 type: Boolean,
                 default: undefined
@@ -57,14 +58,26 @@
         },
         data() {
             return {
+                commentList: [],
                 spreadEditor: false,
                 showSpin: true,
             };
         },
+        watch: {
+            pageId(val) {
+                this.getCommentInfo(val)
+            }
+        },
         methods: {
-            getCommentInfo() {
-                listComment(this.pageId).then((response) => {
-                    this.commentList = response.data;
+            getCommentInfo(pageId) {
+                let param  = {
+                    pageNo: 1,
+                    pageSize: 10,
+                    blogId : pageId
+                }
+                
+                commentPage(param).then((response) => {
+                    this.commentList = response.data.list;
                     this.showSpin = false;
                 }).catch((error) => {
                     console.log(error);

@@ -337,7 +337,7 @@
             window.onresize = function temp() {
                 that.listenWindowWidth();
             };
-            console.log(typeof this.comment)
+            // console.log(typeof this.comment)
         },
         components: {
             'mavon-editor': MavonEditor.mavonEditor

@@ -20,7 +20,7 @@
                             </div>
                         </div>
                     </article-page-content>
-                    <!-- <article-page-footer :article="article"></article-page-footer> -->
+                    <article-page-footer :article="article"></article-page-footer>
                 </div>
             </Col>
             <Col :xs="0" :sm="0" :md="0" :lg="ExpandLeftColumn ? 0 : 7">

@@ -1,7 +1,6 @@
 package cn.iocoder.yudao.module.blog.service.comment;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
@@ -15,6 +14,7 @@ import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentRespVO;
 import cn.iocoder.yudao.module.blog.convert.comment.CommentConvert;
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
 import cn.iocoder.yudao.module.blog.dal.mysql.comment.CommentMapper;
+import cn.iocoder.yudao.module.blog.util.RegionUtils;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -51,8 +51,7 @@ public class CommentServiceImpl implements CommentService {
 
         // 设置位置
         comment.setIp(ServletUtils.getClientIP());
-        comment.setLocation(ServletUtil.get)
-
+        comment.setLocation(RegionUtils.getCityInfoByIp(comment.getIp()));
 
         commentMapper.insert(comment);
         // 返回

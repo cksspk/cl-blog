@@ -6,9 +6,9 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageParam;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.servlet.ServletUtils;
-import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.comment.vo.PortalCommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentRespVO;
 import cn.iocoder.yudao.module.blog.convert.comment.CommentConvert;
@@ -41,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
 
     @Override
-    public Long createComment(CommentCreateReqVO createReqVO) {
+    public Long createComment(PortalCommentCreateReqVO createReqVO) {
         // 插入
         CommentDO comment = CommentConvert.INSTANCE.convert(createReqVO);
         // 获取 userAgent , TODO 直接存储 userAgent
@@ -108,8 +108,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PageResult<PortalCommentRespVO> getCommentPageByBlogId(PortalCommentPageReqVO reqVO) {
-        // 第一次查询博客评论
-        PageResult<CommentDO> pageResult = commentMapper.selectPortalPage(reqVO, null);
+        // 第一次查询博客一级评论
+        PageResult<CommentDO> pageResult = commentMapper.selectPortalCommentRootPage(reqVO);
 
         if (CollUtil.isEmpty(pageResult.getList())) {
             return new PageResult<>(pageResult.getTotal());

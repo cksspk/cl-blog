@@ -68,7 +68,6 @@ public class CommentDO extends BaseDO {
     private Long blogId;
     /**
      * 页面的URL
-
      */
     private String url;
     /**
@@ -77,7 +76,6 @@ public class CommentDO extends BaseDO {
     private Integer display;
     /**
      * 点赞
-
      */
     private Long good;
     /**
@@ -104,5 +102,11 @@ public class CommentDO extends BaseDO {
      * 回复的编号
      */
     private Long replyId;
+
+
+    /**
+     * 一级评论编号
+     */
+    private Long rootId;
 
 }

@@ -1,9 +1,9 @@
 package cn.iocoder.yudao.module.blog.service.comment;
 
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentUpdateReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.comment.vo.PortalCommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentRespVO;
 import cn.iocoder.yudao.module.blog.dal.dataobject.comment.CommentDO;
@@ -25,7 +25,7 @@ public interface CommentService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createComment(@Valid CommentCreateReqVO createReqVO);
+    Long createComment(@Valid PortalCommentCreateReqVO createReqVO);
 
     /**
      * 更新评论

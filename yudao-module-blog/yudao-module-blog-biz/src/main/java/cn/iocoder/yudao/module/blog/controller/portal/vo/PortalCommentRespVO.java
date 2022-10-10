@@ -35,6 +35,9 @@ public class PortalCommentRespVO {
     @ApiModelProperty(value = "子评论数量")
     private Long subTotal;
 
-    private List<PortalCommentRespVO> subComment;
+    @ApiModelProperty(value = "一级评论编号")
+    private Long rootId;
+
+    private List<PortalCommentRespVO> subCommentList;
 
 }

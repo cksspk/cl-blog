@@ -2,7 +2,7 @@ package cn.iocoder.yudao.module.blog.controller.portal.comment;
 
 import cn.iocoder.yudao.framework.common.pojo.CommonResult;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
-import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentCreateReqVO;
+import cn.iocoder.yudao.module.blog.controller.portal.comment.vo.PortalCommentCreateReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentPageReqVO;
 import cn.iocoder.yudao.module.blog.controller.portal.vo.PortalCommentRespVO;
 import cn.iocoder.yudao.module.blog.service.comment.CommentService;
@@ -36,7 +36,7 @@ public class PortalCommentController {
 
     @PostMapping("/create")
     @ApiOperation("创建评论")
-    public CommonResult<Long> createComment(@Valid @RequestBody CommentCreateReqVO createReqVO) {
+    public CommonResult<Long> createComment(@Valid @RequestBody PortalCommentCreateReqVO createReqVO) {
         return success(commentService.createComment(createReqVO));
     }
 

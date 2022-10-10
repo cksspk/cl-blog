@@ -56,10 +56,12 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
     }
 
     // ====== Portal
-    default PageResult<CommentDO> selectPortalPage(PortalCommentPageReqVO reqVO, Long pId) {
+
+
+    default PageResult<CommentDO> selectPortalCommentRootPage(PortalCommentPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<CommentDO>()
                 .eq(CommentDO::getBlogId, reqVO.getBlogId())
-                .eqIfPresent(CommentDO::getParentId, pId)
+                .isNull(CommentDO::getParentId)
                 // 按点赞排序 TODO 后期优化排序
                 .orderByDesc(CommentDO::getGood));
     }
@@ -69,13 +71,14 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
      * 子评论查询，按点赞逆序
      * @param pageParam 只查询两条
      * @param blogId 博客编号
-     * @param pId 父评论编号
+     * @param rootId 一级评论编号
      * @return 评论分页
      */
-    default PageResult<CommentDO> selectChildComments(PageParam pageParam, Long blogId, Long pId) {
+    default PageResult<CommentDO> selectChildComments(PageParam pageParam, Long blogId, Long rootId) {
         return selectPage(pageParam, new LambdaQueryWrapperX<CommentDO>()
                 .eq(CommentDO::getBlogId, blogId)
-                .eq(CommentDO::getParentId, pId)
+                .eq(CommentDO::getRootId, rootId)
+                .isNotNull(CommentDO::getParentId)
                 // 按点赞排序
                 .orderByDesc(CommentDO::getGood));
     }

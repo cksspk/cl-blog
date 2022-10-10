@@ -58,6 +58,7 @@
                                                            :allowComment="allowComment"
                                                            :replyId="comment.id"
                                                            :parentId="commentLevel==1?comment.id:comment.parentId"
+                                                           :rootId="comment.rootId"
                                                            :replyToComment="comment"
                                                            @valueChanged="valueChanged"
                                                            @reloadCommentList="reloadCommentList"></CustomMavonEditor>

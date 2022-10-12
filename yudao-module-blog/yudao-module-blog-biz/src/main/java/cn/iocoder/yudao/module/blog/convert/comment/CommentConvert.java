@@ -1,6 +1,7 @@
 package cn.iocoder.yudao.module.blog.convert.comment;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.iocoder.yudao.framework.common.pojo.PageResult;
 import cn.iocoder.yudao.framework.common.util.collection.CollectionUtils;
 import cn.iocoder.yudao.module.blog.controller.admin.comment.vo.CommentRespVO;
@@ -13,6 +14,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 评论 Convert
@@ -43,7 +45,7 @@ public interface CommentConvert {
 
 
     PortalCommentRespVO convertPortal(CommentDO bean);
-    List<PortalCommentRespVO> convertPortalList(List<CommentDO>  list);
+
     default PageResult<PortalCommentRespVO> convertPortalPage(PageResult<CommentDO> page, HashMap<Long, PageResult<CommentDO>> subCommentMap) {
 
         List<PortalCommentRespVO> commentDOS = CollectionUtils.convertList(page.getList(), comment -> {
@@ -59,6 +61,26 @@ public interface CommentConvert {
         });
 
         return new PageResult<>(commentDOS, page.getTotal());
+    }
+
+    /**
+     * 三级评论翻译
+     */
+    default List<PortalCommentRespVO> convertPortalList(List<CommentDO>  list) {
+        Map<Long, CommentDO> subCommentDOMap = CollectionUtils.convertMap(list, CommentDO::getId);
+
+        return CollectionUtils.convertList(list, subComment -> {
+            PortalCommentRespVO respVO = convertPortal(subComment);
+
+            CommentDO replyComment = subCommentDOMap.get(subComment.getReplyId());
+            if (ObjectUtil.isNotNull(replyComment)) {
+                respVO.setReplyNickName(replyComment.getNickName());
+            }
+
+            return respVO;
+        });
+
+
     }
 
 }

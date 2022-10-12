@@ -18,6 +18,10 @@ public class PortalCommentRespVO {
     @ApiModelProperty(value = "评论编号", required = true)
     private Long id;
 
+
+    @ApiModelProperty(value = "父评论的id")
+    private Long parentId;
+
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
@@ -29,15 +33,21 @@ public class PortalCommentRespVO {
     @ApiModelProperty(value = "Email地址")
     private String email;
 
-    @ApiModelProperty(value = "html内容")
+
     private String htmlContent;
+
 
     @ApiModelProperty(value = "子评论数量")
     private Long subTotal;
 
-    @ApiModelProperty(value = "一级评论编号")
-    private Long rootId;
 
     private List<PortalCommentRespVO> subCommentList;
+
+
+    @ApiModelProperty(value = "回复的id")
+    private Long replyId;
+
+    @ApiModelProperty(value = "回复的NickName")
+    private String replyNickName;
 
 }

@@ -104,9 +104,5 @@ public class CommentDO extends BaseDO {
     private Long replyId;
 
 
-    /**
-     * 一级评论编号
-     */
-    private Long rootId;
 
 }

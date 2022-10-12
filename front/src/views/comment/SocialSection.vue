@@ -73,7 +73,7 @@
                 let param  = {
                     pageNo: 1,
                     pageSize: 10,
-                    blogId : pageId
+                    blogId : pageId ? pageId : this.pageId
                 }
                 
                 commentPage(param).then((response) => {

@@ -58,7 +58,6 @@
                                                            :allowComment="allowComment"
                                                            :replyId="comment.id"
                                                            :parentId="commentLevel==1?comment.id:comment.parentId"
-                                                           :rootId="comment.rootId"
                                                            :replyToComment="comment"
                                                            @valueChanged="valueChanged"
                                                            @reloadCommentList="reloadCommentList"></CustomMavonEditor>
@@ -143,6 +142,7 @@
                 this.spreadEditor = flag;
             },
             displayEditor() {
+                console.log("commentLevel", this.commentLevel);
                 this.showEditor = !this.showEditor;
             },
             likeComment(comment) {

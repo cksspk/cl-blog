@@ -71,13 +71,13 @@ public interface CommentMapper extends BaseMapperX<CommentDO> {
      * 子评论查询，按点赞逆序
      * @param pageParam 只查询两条
      * @param blogId 博客编号
-     * @param rootId 一级评论编号
+     * @param parentId 一级评论编号
      * @return 评论分页
      */
-    default PageResult<CommentDO> selectChildComments(PageParam pageParam, Long blogId, Long rootId) {
+    default PageResult<CommentDO> selectChildComments(PageParam pageParam, Long blogId, Long parentId) {
         return selectPage(pageParam, new LambdaQueryWrapperX<CommentDO>()
                 .eq(CommentDO::getBlogId, blogId)
-                .eq(CommentDO::getRootId, rootId)
+                .eq(CommentDO::getParentId, parentId)
                 .isNotNull(CommentDO::getParentId)
                 // 按点赞排序
                 .orderByDesc(CommentDO::getGood));

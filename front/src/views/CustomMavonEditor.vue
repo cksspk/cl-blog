@@ -107,11 +107,6 @@
                 Type: Number,
                 default: undefined
             },
-            //一级评论Id
-            rootId: {
-                Type: Number,
-                default: undefined
-            },
             url: {
                 default: window.location.href
             }
@@ -315,16 +310,7 @@
                 this.form.parentId = this.parentId;
                 this.form.blogId = this.pageId;
                 this.form.url = this.url;
-                if(this.form.parentId) {
-                    if(this.form.rootId){
-                        // 所有非一级评论的rootId相同
-                        this.form.rootId = this.form.rootId;
-                    }else {
-                        this.form.rootId = this.form.parentId;
-                    }
-                    
-                }
-                
+                console.log("this.form:", this.form);
                 let obj = JSON.parse(JSON.stringify(this.form));
                 addComment(obj).then((response) => {
                     // if (response.code == 200) {

@@ -87,8 +87,4 @@ public class PortalCommentBaseVO {
     private Long replyId;
 
 
-    @ApiModelProperty(value = "一级评论编号")
-    private Long rootId;
-
-
 }
